@@ -2,8 +2,8 @@
 mscales
 =======
 
-.. image:: https://img.shields.io/travis/fabianmoss/mscales.svg
-        :target: https://travis-ci.com/fabianmoss/mscales
+.. image:: https://app.travis-ci.com/fabianmoss/mscales.svg?branch=main
+        :target: https://app.travis-ci.com/fabianmoss/mscales
 
 .. image:: https://img.shields.io/pypi/v/mscales.svg
         :target: https://pypi.python.org/pypi/mscales
