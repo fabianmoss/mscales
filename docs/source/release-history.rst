@@ -2,5 +2,9 @@
 Release History
 ===============
 
-Initial Release (YYYY-MM-DD)
-----------------------------
+v0.0.1 (2022-03-29)
+-------------------
+
+- initial Release
+- `generate_scales` implemented
+- Travis CI not working yet
