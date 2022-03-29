@@ -17,7 +17,7 @@ mscales
 Python package to generate and analyze musical scales.
 
 * Free software: 3-clause BSD license
-* Documentation: (COMING SOON!) https://fabianmoss.github.io/mscales.
+* Documentation: https://mscales.readthedocs.io/en/latest/.
 
 Features
 --------
