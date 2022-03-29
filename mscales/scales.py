@@ -13,8 +13,8 @@ def generate_scales(c=2):
 
     Returns
     -------
-    pd.DataFrame
-        DataFrame containing all scales.
+    np.array
+        Numpy array containing all scales.
     """
 
     a = np.asarray(list(product([0, 1], repeat=c)))
