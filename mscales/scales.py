@@ -1,5 +1,4 @@
 import numpy as np
-import pandas as pd
 from itertools import product
 
 
@@ -19,6 +18,5 @@ def generate_scales(c=2):
     """
 
     a = np.asarray(list(product([0, 1], repeat=c)))
-    df = pd.DataFrame(a)
 
-    return df
+    return a
