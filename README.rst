@@ -3,7 +3,7 @@ mscales
 =======
 
 .. image:: https://img.shields.io/travis/fabianmoss/mscales.svg
-        :target: https://travis-ci.org/fabianmoss/mscales
+        :target: https://travis-ci.com/fabianmoss/mscales
 
 .. image:: https://img.shields.io/pypi/v/mscales.svg
         :target: https://pypi.python.org/pypi/mscales
