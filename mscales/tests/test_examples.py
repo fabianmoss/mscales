@@ -1,3 +1,6 @@
-def test_one_plus_one_is_two():
-    "Check that one and one are indeed two."
-    assert 1 + 1 == 2
+from ..scales import generate_scales
+
+
+def test_generate_scales():
+    for c in range(15):
+        assert 2**c == generate_scales(c=c).shape[0]
