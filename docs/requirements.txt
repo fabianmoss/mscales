@@ -1,1 +1,3 @@
 mscales
+ipython
+matplotlib
