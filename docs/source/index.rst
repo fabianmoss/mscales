@@ -27,6 +27,12 @@ You can generate all scales with chromatic cardinality `c` as follows:
 The variable `s` will then contain a numpy array with all possible scales
 in 12-tone equal temperament.
 
+.. warning::
+   Be careful with your choice for `c`!
+   Since scales are binary vectors, there are :math:`2^c` scales,
+   a number that can `grow very quickly <https://en.wikipedia.org/wiki/Power_of_two>`_
+   and seriously slow down your computer.
+
 Plotting
 --------
 
