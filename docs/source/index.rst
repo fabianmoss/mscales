@@ -3,13 +3,45 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-mscales Documentation
-=====================
+mscales Quickstart
+==================
+
+Installation
+------------
+
+Install `mscales` by entering the following into your terminal::
+
+   pip install mscales
+
+Usage
+-----
+
+In `mscales`, musical scales are conceived as binary vectors.
+You can generate all scales with chromatic cardinality `c` as follows:
+
+.. code-block:: python
+
+    from mscales import generate_scales
+    s = generate_scales(c=12)
+
+The variable `s` will then contain a numpy array with all possible scales
+in 12-tone equal temperament.
+
+Plotting
+--------
+
+Scales from this collection can then be accessed and plotted:
+
+.. code-block:: python
+
+   import matplotlib.pyplot as plt
+   from mscales.plots import plot_scale
+
+   plot_scale(s[4,:])
+   plt.show()
 
 .. toctree::
    :maxdepth: 2
 
-   installation
-   usage
    release-history
    min_versions
