@@ -5,6 +5,11 @@ Release History
 v0.0.2 (2022-04-10)
 -------------------
 
+- introduce Scales class
+
+v0.0.2 (2022-04-10)
+-------------------
+
 - basic plotting
 - basic sonification
 - Travis is working
