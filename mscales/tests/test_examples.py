@@ -1,6 +1,6 @@
-from ..scales import generate_scales
+from ..scales import Scales
 
 
 def test_generate_scales():
     for c in range(15):
-        assert 2**c == generate_scales(c=c).shape[0]
+        assert 2**c == Scales(cardinality=c).shape[0]
