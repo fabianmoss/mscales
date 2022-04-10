@@ -2,21 +2,27 @@ import numpy as np
 from itertools import product
 
 
-def generate_scales(c=2):
-    """
-    Generate all scales (binary vectors) for a given chromatic cardinality `c`.
+class Scales:
+    """The base class for all scales."""
 
-    Parameters
-    ----------
-    c : int, optional
-        chromatic cardinality, by default 2
+    def __init__(self, cardinality):
+        self.cardinality = cardinality
 
-    Returns
-    -------
-    np.array
-        Numpy array containing all scales.
-    """
+    def all(self):
+        """
+        Return all scales (binary vectors) for a given chromatic cardinality `c`.
 
-    a = np.asarray(list(product([0, 1], repeat=c)))
+        Parameters
+        ----------
+        c : int, optional
+            chromatic cardinality, by default 2
 
-    return a
+        Returns
+        -------
+        numpy.array
+            Numpy array containing all scales.
+        """
+
+        scales = np.asarray(list(product([0, 1], repeat=self.cardinality)))
+
+        return scales
