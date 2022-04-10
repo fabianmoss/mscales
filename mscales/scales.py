@@ -25,4 +25,6 @@ class Scales:
 
         scales = np.asarray(list(product([0, 1], repeat=self.cardinality)))
 
+        self.n_scales = scales.shape[0]
+
         return scales
