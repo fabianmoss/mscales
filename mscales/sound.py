@@ -49,13 +49,13 @@ def scale2notelist(s):
 
     assert s.shape[0] == 12
 
-    pcs = np.nonzero(s)
+    (pcs,) = np.nonzero(s)
 
     return [pc2note(pc) for pc in pcs]
 
 
 def tone_cloud(
-    note_list,
+    scale,
     tracks=1,
     n_samples=100,
     duration=0.15,
@@ -98,14 +98,16 @@ def tone_cloud(
         _description_
     """
 
+    assert waveform in [SINE_WAVE, SQUARE_WAVE, SAWTOOTH_WAVE]
+
+    note_list = scale2notelist(scale)
+
     # initialize mixer
     mixer = Mixer(sample_rate, amplitude)
 
     # add tracks
     for i in range(tracks):
-        mixer.create_track(i, waveform=waveform, attack=attack, decay=decay)
-
-        assert waveform in [SINE_WAVE, SQUARE_WAVE, SAWTOOTH_WAVE]
+        mixer.create_track(i, waveform, attack=attack, decay=decay)
 
         # sample tones from list and add to mixer
         tones = [np.random.choice(note_list) for _ in range(n_samples)]
