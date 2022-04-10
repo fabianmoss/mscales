@@ -79,7 +79,7 @@ is achieved with the `sound` module.
     </audio>
 
 There are lots of parameters to change the sound. They will be documented
-in more detail in the future.
+in more detail in future releases.
 
 History
 -------
