@@ -14,7 +14,7 @@ mscales
         :target: https://mscales.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-Python package to generate and analyze musical scales.
+Python 1 package to generate and analyze musical scales.
 
 * Free software: 3-clause BSD license
 * Documentation: https://mscales.readthedocs.io/en/latest/.
