@@ -13,8 +13,8 @@ Install `mscales` by entering the following into your terminal::
 
    pip install mscales
 
-Usage
------
+Generation
+----------
 
 In `mscales`, musical scales are conceived as binary vectors.
 You can generate all scales with chromatic cardinality `c` as follows:
@@ -45,6 +45,16 @@ Scales from this collection can then be accessed and plotted:
 
    plot_scale(s[4,:])
    plt.show()
+
+
+Sonification
+------------
+
+Sonification, the mapping of generated scales to sound,
+is achieved with the `sound` module.
+
+History
+-------
 
 .. toctree::
    :maxdepth: 2
