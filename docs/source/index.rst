@@ -21,8 +21,8 @@ You can generate all scales with chromatic `cardinality` as follows:
 
 .. code-block:: python
 
-    from mscales.scales import Scales
-    s = Scales(cardinality=12)
+    >>> from mscales.scales import Scales
+    >>> s = Scales(cardinality=12)
 
 The variable `scales` has initialized all potential scales with cardinality 12.
 In order to access these scales, call the `.all()` method:
@@ -53,6 +53,36 @@ One can access a specific scale through its row index:
 >>> scale = scales[3000,:]
 >>> scale
 array([1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0])
+
+The pitch-class represenation of all scales can be obtained
+as a list of numpy arrays:
+
+>>> s.pitch_classes()
+[array([], dtype=int64),
+ array([11]),
+ array([10]),
+ array([10, 11]),
+ ...
+ array([2, 3, 4, 5, 6, 9]),
+ array([ 2,  3,  4,  5,  6,  9, 11]),
+ array([ 2,  3,  4,  5,  6,  9, 10]),
+ array([ 2,  3,  4,  5,  6,  9, 10, 11]),
+ ...]
+
+and the corresponding interval vectors can be accessed
+as a list of Counter objects:
+
+>>> s.interval_vectors()
+[Counter(),
+ Counter(),
+ Counter(),
+ Counter({1: 1}),
+ ...
+ Counter({1: 4, 2: 3, 3: 3, 4: 2, 7: 1, 6: 1, 5: 1}),
+ Counter({1: 4, 2: 4, 3: 3, 4: 2, 7: 2, 9: 1, 6: 2, 8: 1, 5: 2}),
+ Counter({1: 5, 2: 3, 3: 3, 4: 3, 7: 2, 8: 1, 6: 2, 5: 2}),
+ Counter({1: 6, 2: 4, 3: 3, 4: 3, 7: 3, 8: 2, 9: 1, 6: 3, 5: 3}),
+ ...]
 
 Plotting
 --------
