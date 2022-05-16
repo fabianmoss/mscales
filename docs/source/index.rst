@@ -52,13 +52,15 @@ It is also possible to only generate the scales of chromatic cardinality `c`
 with a particular diatonic cardinality `d`:
 
 >>> s = Scales(c=12, d=7)
->>> scales
+>>> scales = s.all()
+>>> scales.shape
+(792, 12)
 
 One can access a specific scale through its row index:
 
->>> scale = scales[3000,:]
+>>> scale = scales[500,:]
 >>> scale
-array([1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0])
+array([1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0])
 
 The pitch-class represenation of all scales can be obtained
 as a list of numpy arrays:
