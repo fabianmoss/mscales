@@ -17,12 +17,12 @@ Generation
 ----------
 
 In `mscales`, musical scales are conceived as binary vectors.
-You can generate all scales with chromatic `cardinality` as follows:
+You can generate all scales with chromatic cardinality `c` as follows:
 
 .. code-block:: python
 
     >>> from mscales.scales import Scales
-    >>> s = Scales(cardinality=12)
+    >>> s = Scales(c=12)
 
 The variable `scales` has initialized all potential scales with cardinality 12.
 In order to access these scales, call the `.all()` method:
@@ -47,6 +47,12 @@ This will return a :math:`2^c \times c` numpy array:
    Since scales are binary vectors, there are :math:`2^c` scales,
    a number that can `grow very quickly <https://en.wikipedia.org/wiki/Power_of_two>`_
    and seriously slow down your computer.
+
+It is also possible to only generate the scales of chromatic cardinality `c`
+with a particular diatonic cardinality `d`:
+
+>>> s = Scales(c=12, d=7)
+>>> scales
 
 One can access a specific scale through its row index:
 
