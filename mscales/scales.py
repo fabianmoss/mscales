@@ -6,8 +6,9 @@ from collections import Counter
 class Scales:
     """The base class for all scales."""
 
-    def __init__(self, cardinality):
-        self.cardinality = cardinality
+    def __init__(self, c, d=None):
+        self.c = c
+        self.d = d
 
     def all(self):
         """
@@ -24,11 +25,15 @@ class Scales:
             Numpy array containing all scales.
         """
 
-        scales = np.asarray(list(product([0, 1], repeat=self.cardinality)))
+        scales = np.asarray(list(product([0, 1], repeat=self.c)))
 
-        self.n_scales = scales.shape[0]
-
-        return scales
+        if self.d is not None:
+            condition = np.where(scales.sum(axis=1) == self.d)
+            self.n_scales = scales[condition].shape[0]
+            return scales[condition]
+        else:
+            self.n_scales = scales.shape[0]
+            return scales
 
     def pitch_classes(self):
         """
