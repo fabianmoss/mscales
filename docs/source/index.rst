@@ -154,5 +154,6 @@ History
 .. toctree::
    :maxdepth: 2
 
+   pcsets
    release-history
    min_versions
