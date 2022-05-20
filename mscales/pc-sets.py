@@ -79,19 +79,6 @@ class PitchClassSet:
             else:
                 return PitchClassSet(rotations.flatten())
 
-    # def most_compact(self, arr):
-    #     for i in range(arr.shape[1] - 1, 0, -1):
-    #         min_diff = min([(r[i] - r[0]) % self.c for r in arr])
-    #         mask = (arr[:, i] - arr[:, 0]) % self.c == min_diff
-
-    #         if np.array_equal(arr, arr[mask]):
-    #             return PitchClassSet(arr[0, :])
-    #         elif arr.shape[0] > 1:
-    #             arr = arr[mask]
-    #             pass
-    #         else:
-    #             return PitchClassSet(arr.flatten())
-
     def prime_form(self):
 
         t = self.normal_form()
@@ -106,7 +93,6 @@ class PitchClassSet:
             return i
         else:
             return t
-            # return t.pcs - i.pcs, i.pcs - t.pcs, np.array([t.pcs,i.pcs]).argmin(axis=0)
 
         # The following special cases were taken from https://ianring.com/
         # TODO: Implement special cases!
