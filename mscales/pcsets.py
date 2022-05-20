@@ -65,7 +65,11 @@ class PitchClassSet:
         return PitchClassSet(np.setdiff1d(np.arange(self.c), self.pcs))
 
     def normal_form(self):
-        rotations = np.asarray([list(s)[i : len(s)] + list(s)[0:i] for i in range(len(s))])
+        # rotations = np.asarray(
+        #     [ self.pcs[i : len(self.pcs)] + self.pcs[0:i] for i in range(len(self.pcs)) ]
+        # )
+
+        rotations = np.array([np.roll(self.pcs, i) for i in range(self.pcs.shape[0])])
 
         for i in range(rotations.shape[1] - 1, 0, -1):
             min_diff = min([(r[i] - r[0]) % self.c for r in rotations])
@@ -131,27 +135,27 @@ class PitchClassSet:
         return np.asarray([self.transpose(-i).pcs for i in self.pcs])
 
     def info(self):
-        print("=" * len(repr(pcset)))
-        print(repr(pcset))
-        print("=" * len(repr(pcset)))
+        print("=" * len(repr(self)))
+        print(repr(self))
+        print("=" * len(repr(self)))
         print()
         print("Set Theory")
         print("==========")
-        print("complement\t:", pcset.complement())
-        print("transposed\t:", pcset.transpose(2))
-        print("inverted\t:", pcset.invert())
-        print("T2I\t\t:", pcset.invert(2))
-        print("normal form\t:", pcset.normal_form())
-        print("prime form\t:", pcset.prime_form())
-        print("interval vector\t:", pcset.interval_vector())
+        print("complement\t:", self.complement())
+        print("transposed\t:", self.transpose(2))
+        print("inverted\t:", self.invert())
+        print("T2I\t\t:", self.invert(2))
+        print("normal form\t:", self.normal_form())
+        print("prime form\t:", self.prime_form())
+        print("interval vector\t:", self.interval_vector())
         print()
         print("Serialism")
         print("=========")
-        print("original\t:", pcset)
-        print("retrograde\t:", pcset.retrograde())
-        print("inversion\t:", pcset.inversion())
-        print("retro.-inv.\t:", pcset.inversion().retrograde())
-        print("matrix\t\t:", str(pcset.matrix()).replace("\n", "\n\t\t"))
+        print("original\t:", self)
+        print("retrograde\t:", self.retrograde())
+        print("inversion\t:", self.inversion())
+        print("retro.-inv.\t:", self.inversion().retrograde())
+        print("matrix\t\t:", str(self.matrix()).replace("\n", "\n\t\t"))
 
 
 if __name__ == "__main__":
@@ -166,5 +170,4 @@ if __name__ == "__main__":
     s = {7, 10, 1, 5}
     s = [0, 1, 6, 7, 5, 2, 4, 3, 10, 9, 11, 8]  # 12-tone row
     pcset = PitchClassSet(s)
-
     pcset.info()
