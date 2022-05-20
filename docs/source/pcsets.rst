@@ -48,4 +48,4 @@ are stored in the `.info()` method.
     matrix          : [[ 0  3  4]
                     [ 9  0  1 ]
                     [ 8 11  0]]
-   """
+    """
