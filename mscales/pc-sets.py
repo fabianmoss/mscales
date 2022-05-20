@@ -1,4 +1,5 @@
 import numpy as np
+from itertools import combinations
 
 # class PitchClass:
 
@@ -107,7 +108,15 @@ class PitchClassSet:
         # // 8-26      (0134578T)        (0124579T)
 
     def interval_vector(self):
-        raise NotImplementedError
+        half = int(np.ceil(self.c / 2))
+        intervals = [(b - a) % 12 for a, b in list(combinations(self.pcs, r=2))]
+        interval_classes = [i if i <= half else self.c - i for i in intervals]
+
+        iv = np.zeros(half, dtype=int)
+        for i in interval_classes:
+            iv[i - 1] += 1
+
+        return iv
 
     def sum(self) -> int:
         return sum(self.pcs)
@@ -116,12 +125,13 @@ class PitchClassSet:
         print("=" * len(repr(pcset)))
         print(repr(pcset))
         print("=" * len(repr(pcset)))
-        print("compl.\t:", pcset.complement())
-        print("transp.\t:", pcset.transpose(2))
-        print("inv.\t:", pcset.invert())
-        print("T2I\t:", pcset.invert(2))
-        print("NF\t:", pcset.normal_form())
-        print("PF\t:", pcset.prime_form())
+        print("complement\t:", pcset.complement())
+        print("transposition\t:", pcset.transpose(2))
+        print("inversion\t:", pcset.invert())
+        print("T2I\t\t:", pcset.invert(2))
+        print("normal form\t:", pcset.normal_form())
+        print("prime form\t:", pcset.prime_form())
+        print("interval vector\t:", pcset.interval_vector())
 
 
 if __name__ == "__main__":
@@ -131,6 +141,9 @@ if __name__ == "__main__":
     # s = {11,2,3,7}
     # s = {8,0,9}
     s = {0, 2, 4, 5, 7, 9, 11}
+    # s = {0,1,2}
+    # s = {0,4,7}
+    s = {7, 10, 1, 5}
     pcset = PitchClassSet(s)
 
     pcset.info()
