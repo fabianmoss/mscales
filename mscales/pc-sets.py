@@ -65,7 +65,6 @@ class PitchClassSet:
         return PitchClassSet(np.setdiff1d(np.arange(self.c), self.pcs))
 
     def normal_form(self):
-        # s = sorted(self.pcs)
         rotations = np.asarray([list(s)[i : len(s)] + list(s)[0:i] for i in range(len(s))])
 
         for i in range(rotations.shape[1] - 1, 0, -1):
