@@ -15,7 +15,7 @@ ipython
 matplotlib
 numpydoc
 sphinx-copybutton
-sphinx_rtd_theme
+sphinx-material
 
 # additional libraries used
 tones
