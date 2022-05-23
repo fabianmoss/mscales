@@ -1,6 +1,11 @@
 Release History
 ===============
 
+v1.1.0 (2022-05-23)
+-------------------
+
+- add PitchClass and PitchClassInterval classes
+
 v0.1.0 (2022-05-23)
 -------------------
 
