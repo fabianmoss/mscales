@@ -2,7 +2,7 @@
 mscales
 =======
 
-`mscales` is a Python package to generate, visualize,
+``mscales`` is a Python package to generate, visualize,
 and sonify musical scales.
 
 .. image:: _static/asemic_sounds.png

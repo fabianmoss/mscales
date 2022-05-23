@@ -1,16 +1,16 @@
 Pitch-Class Sets
 ================
 
-Apart from the `scales` module discussed
-in Quickstart, `mscales` also contains the `pcsets` module.
+Apart from the ``scales`` module discussed
+in Quickstart, ``mscales`` also contains the ``pcsets`` module.
 At the moment, they are alternatives with partially overlapping
 functionalities but they will be merged in the futured.
 
 .. note::
-    As a rule of thumb, use the `scales` module whenever possible
-    and only revert to `pcsets` when you need very specific things.
+    As a rule of thumb, use the ``scales`` module whenever possible
+    and only revert to ``pcsets`` when you need very specific things.
 
-The `pcsets` module implements classic definitions of
+The ``pcsets`` module implements classic definitions of
 and transformations on pitch-class sets known from Set Theory.
 Pitch-class sets (from now on pcsets) can be instantiated as follows:
 
@@ -19,7 +19,7 @@ Pitch-class sets (from now on pcsets) can be instantiated as follows:
 [11  2  3]
 
 pcsets have lots of transformations impmented, and their results
-are stored in the `.info()` method.
+are stored in the ``.info()`` method.
 
 .. code-block:: python
 

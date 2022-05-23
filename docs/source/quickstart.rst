@@ -5,23 +5,23 @@ Quickstart
 Installation
 ============
 
-Install `mscales` by entering the following into your terminal::
+Install ``mscales`` by entering the following into your terminal::
 
    pip install mscales
 
 Generation
 ==========
 
-In `mscales`, musical scales are conceived as binary vectors.
-You can generate all scales with chromatic cardinality `c` as follows:
+In ``mscales``, musical scales are conceived as binary vectors.
+You can generate all scales with chromatic cardinality ``c`` as follows:
 
 .. code-block:: python
 
     >>> from mscales import Scales
     >>> s = Scales(c=12)
 
-The variable `scales` has initialized all potential scales with cardinality 12.
-In order to access these scales, call the `.all()` method:
+The variable ``scales`` has initialized all potential scales with cardinality 12.
+In order to access these scales, call the ``.all()`` method:
 
 >>> scales = s.all()
 >>> scales
@@ -39,13 +39,13 @@ This will return a :math:`2^c \times c` numpy array:
 (4096, 12)
 
 .. warning::
-   Be careful with your choice for `cardinality`!
+   Be careful with your choice for ``c``!
    Since scales are binary vectors, there are :math:`2^c` scales,
    a number that can `grow very quickly <https://en.wikipedia.org/wiki/Power_of_two>`_
    and seriously slow down your computer.
 
-It is also possible to only generate the scales of chromatic cardinality `c`
-with a particular diatonic cardinality `d`:
+It is also possible to only generate the scales of chromatic cardinality ``c``
+with a particular diatonic cardinality ``d``:
 
 >>> s = Scales(c=12, d=7)
 >>> scales = s.all()
@@ -113,10 +113,10 @@ Sonification
 
 .. note::
    Currently, we can only synthesize scales with a cardinality of 12
-   because `mscales` relies on the `tones` library.
+   because ``mscales`` relies on the `tones <https://github.com/eriknyquist/tones>`_ library.
 
 Sonification, the mapping of generated scales to sound,
-is achieved with the `sound` module.
+is achieved with the ``sound`` module.
 
 .. code-block:: python
 
@@ -134,5 +134,5 @@ is achieved with the `sound` module.
 There are lots of parameters to change the sound. They will be documented
 in more detail in future releases.
 
-Now, go on to read about the two main objects in `mscales`:
+Now, go on to read about the two main objects in ``mscales``:
 scales and pitch-class sets.
