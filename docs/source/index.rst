@@ -5,9 +5,9 @@ mscales
 ``mscales`` is a Python package to generate, visualize,
 and sonify musical scales.
 
-.. image:: _static/asemic_sounds.png
+.. image:: _static/sharon-mccutcheon-igBvG1AKTY8-unsplash.jpg
    :align: center
-   :alt: "Asemic sounds" by Cecil Touchon (Image taken from https://pin.it/13REi6v).
+   :alt: Photo by `Sharon McCutcheon <https://unsplash.com/@sharonmccutcheon>`_.
 
 .. toctree::
    :caption: Contents
