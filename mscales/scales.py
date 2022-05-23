@@ -6,7 +6,7 @@ from collections import Counter
 class Scales:
     """The base class for all scales."""
 
-    def __init__(self, c, d=None):
+    def __init__(self, c: int = 1, d=None):
         self.c = c
         self.d = d
 

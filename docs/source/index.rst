@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-mscales Quickstart
-==================
+Quickstart
+==========
 
 `mscales` is a Python package to generate, visualize,
 and sonify musical scales.
@@ -24,7 +24,7 @@ You can generate all scales with chromatic cardinality `c` as follows:
 
 .. code-block:: python
 
-    >>> from mscales.scales import Scales
+    >>> from mscales import Scales
     >>> s = Scales(c=12)
 
 The variable `scales` has initialized all potential scales with cardinality 12.
@@ -109,8 +109,11 @@ Either as a simple bar plot:
    plot_scale(scale)
    plt.show()
 
-.. image:: img/example-scale.png
-   :alt: Example scale.
+.. plot:: pyplots/example-scale-bars.py
+   :include-source:
+   :align: center
+   :alt: Example scale bar plot.
+   :caption: Example scale bar plot.
 
 or as a polar stem plot:
 
@@ -119,8 +122,14 @@ or as a polar stem plot:
    plot_polar(scale)
    plt.show()
 
-.. image:: img/example-scale-polar.png
-   :alt: Example scale (polar).
+.. .. image:: pyplots/example-scale-polar.png
+..    :alt: Example scale (polar).
+
+.. plot:: pyplots/example-scale-polar.py
+   :include-source:
+   :align: center
+   :alt: Example scale polar plot.
+   :caption: Example scale polar plot.
 
 Sonification
 ------------
@@ -148,12 +157,17 @@ is achieved with the `sound` module.
 There are lots of parameters to change the sound. They will be documented
 in more detail in future releases.
 
+.. toctree::
+   :hidden:
+
+   self
+   scales
+   pcsets
+
 History
 -------
 
 .. toctree::
    :maxdepth: 2
 
-   pcsets
    release-history
-   min_versions

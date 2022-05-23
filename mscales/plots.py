@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_scale(s, save=False):
+def plot_bars(s, save=False):
     """
     Bar plot of a scale.
 
@@ -44,7 +44,3 @@ def plot_polar(s, save=False):
     if save:
         plt.savefig(save)
     plt.show()
-
-
-s = np.array([1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0])
-plot_polar(s, save="../docs/source/img/example-scale-polar.png")

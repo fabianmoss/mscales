@@ -1,5 +1,5 @@
-PC Sets
-=======
+Pitch-Class Sets
+================
 
 Apart from the `scales` module discussed
 in Quickstart, `mscales` also contains the `pcsets` module.
@@ -14,7 +14,7 @@ The `pcsets` module implements classic definitions of
 and transformations on pitch-class sets known from Set Theory.
 Pitch-class sets (from now on pcsets) can be instantiated as follows:
 
->>> from mscales.pcsets import PitchClassSet
+>>> from mscales import PitchClassSet
 >>> s = PitchClassSet({11,2,3})
 [11  2  3]
 
@@ -41,11 +41,17 @@ are stored in the `.info()` method.
 
     Serialism
     =========
-    original        : [11  2  3]
-    retrograde      : [ 3  2 11]
-    inversion       : [11  8  7]
-    retro.-inv.     : [ 7  8 11]
+    original        :  [11  2  3]
+    retrograde      :  [ 3  2 11]
+    inversion       :  [11  8  7]
+    retro.-inv.     :  [ 7  8 11]
     matrix          : [[ 0  3  4]
-                    [ 9  0  1 ]
-                    [ 8 11  0]]
+                       [ 9  0  1]
+                       [ 8 11  0]]
     """
+
+The methods currently implemented are:
+
+.. automodule:: pcsets
+    :members:
+    :undoc-members:
