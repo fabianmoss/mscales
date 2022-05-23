@@ -57,6 +57,9 @@ class PitchClassSet:
     def __len__(self):
         return len(self.pcs)
 
+    def sort(self):
+        return PitchClassSet(np.sort(self.pcs))
+
     def to_vector(self):
         v = np.zeros(self.c, dtype=int)
         v[self.pcs] += 1
@@ -72,9 +75,6 @@ class PitchClassSet:
         return PitchClassSet(np.setdiff1d(np.arange(self.c), self.pcs))
 
     def normal_form(self):
-        # rotations = np.asarray(
-        #     [ self.pcs[i : len(self.pcs)] + self.pcs[0:i] for i in range(len(self.pcs)) ]
-        # )
 
         rotations = np.array([np.roll(self.pcs, i) for i in range(self.pcs.shape[0])])
 
@@ -86,17 +86,19 @@ class PitchClassSet:
                 return PitchClassSet(rotations[0, :])
             elif rotations.shape[0] > 1:
                 rotations = rotations[mask]
-                pass
             else:
                 return PitchClassSet(rotations.flatten())
 
     def prime_form(self):
+        """Prime form of the pitch-class set, after Rahn.
+        See also: https://ianring.com/musictheory/scales/#primeform
+        """
 
         t = self.normal_form()
-        t = t.transpose(-t.pcs[0])
+        t = t.transpose(-t.pcs[0]).sort()
 
         i = t.invert().normal_form()
-        i = i.transpose(-i.pcs[0])
+        i = i.transpose(-i.pcs[0]).sort()
 
         if np.array_equal(i.pcs, t.pcs):
             return t
@@ -119,7 +121,7 @@ class PitchClassSet:
 
     def interval_vector(self):
         half = int(np.ceil(self.c / 2))
-        intervals = [(b - a) % 12 for a, b in list(combinations(self.pcs, r=2))]
+        intervals = [(b - a) % self.c for a, b in list(combinations(self.pcs, r=2))]
         interval_classes = [i if i <= half else self.c - i for i in intervals]
 
         iv = np.zeros(half, dtype=int)
@@ -172,7 +174,9 @@ if __name__ == "__main__":
     # test cases from https://musictheory.pugetsound.edu/mt21c/PrimeForm.html
     # s = {3, 11, 2}
     # s = {11,2,3,7}
-    s = {0, 4, 8}
+    # s = {0, 2, 4}
+    s = {0, 1, 4, 6}  # all-interval tetrachord
+    # s = {1,5,6,7} # from Straus, p. 58
     # s = {0, 2, 4, 5, 7, 9, 11}
     # s = {0,1,2}
     # s = {0,4,7}
