@@ -66,7 +66,7 @@ class PitchClassSet:
         self.d = len(pcset)
 
         if isinstance(pcset, (Iterable, PitchClassSet)):
-            self.pcs = np.array([p for p in list(pcset)])
+            self.pcs = np.array(list(pcset))
         else:
             raise TypeError(f"I don't recognize the pitch-class input {type(pcset)}.")
 
@@ -206,10 +206,3 @@ if __name__ == "__main__":
     # s = [0, 1, 6, 7, 5, 2, 4, 3, 10, 9, 11, 8]  # 12-tone row
     pcset = PitchClassSet(s)
     pcset.info()
-
-    p = PitchClass(3)
-    i = PitchClassInterval(-2)
-    j = PitchClassInterval(5)
-    print(-p)
-    print(p + i)
-    print(type(i + j))
