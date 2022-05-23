@@ -105,14 +105,6 @@ Plotting
 Scales from this collection can then be accessed and plotted.
 Either as a simple bar plot:
 
-.. code-block:: python
-
-   import matplotlib.pyplot as plt
-   from mscales.plots import plot_scale, plot_polar
-
-   plot_scale(scale)
-   plt.show()
-
 .. plot:: pyplots/example-scale-bars.py
    :include-source:
    :align: center
@@ -120,11 +112,6 @@ Either as a simple bar plot:
    :caption: Example scale bar plot.
 
 or as a polar stem plot:
-
-.. code-block:: python
-
-   plot_polar(scale)
-   plt.show()
 
 .. plot:: pyplots/example-scale-polar.py
    :include-source:
