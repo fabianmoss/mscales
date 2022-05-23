@@ -19,8 +19,3 @@ Python package to generate, visualize, and sonify musical scales.
 * Free software: 3-clause BSD license
 * Documentation: https://mscales.readthedocs.io/en/latest/.
 * Package build with a `cookiecutter template <https://nsls-ii.github.io/scientific-python-cookiecutter/index.html>`_
-
-Features
---------
-
-* TODO
