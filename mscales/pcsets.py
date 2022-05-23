@@ -1,5 +1,6 @@
 import numpy as np
 from itertools import combinations
+from collections.abc import Iterable
 
 # class PitchClass:
 
@@ -42,7 +43,7 @@ class PitchClassSet:
         self.c = c
         self.d = len(pcset)
 
-        if isinstance(pcset, (set, list, tuple, np.ndarray, PitchClassSet)):
+        if isinstance(pcset, (Iterable, PitchClassSet)):
             self.pcs = np.array([p for p in list(pcset)])
         else:
             raise TypeError(f"I don't recognize the pitch-class input {type(pcset)}.")
@@ -178,5 +179,4 @@ if __name__ == "__main__":
     # s = {7, 10, 1, 5}
     # s = [0, 1, 6, 7, 5, 2, 4, 3, 10, 9, 11, 8]  # 12-tone row
     pcset = PitchClassSet(s)
-    print(pcset.palindrome())
-    # pcset.info()
+    pcset.info()
