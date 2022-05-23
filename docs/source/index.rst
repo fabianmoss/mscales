@@ -8,7 +8,6 @@ and sonify musical scales.
 .. toctree::
    :caption: Contents
    :maxdepth: 2
-   :numbered:
 
    quickstart
    scales
