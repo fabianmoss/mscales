@@ -94,11 +94,11 @@ Plotting
 Scales from this collection can then be accessed and plotted.
 Either as a simple bar plot:
 
-.. plot:: pyplots/example-scale-bars.py
+.. plot:: pyplots/example-scale-barcode.py
    :include-source:
    :align: center
-   :alt: Example scale bar plot.
-   :caption: Example scale bar plot.
+   :alt: Example scale barcode plot.
+   :caption: Example scale barcode plot.
 
 or as a polar stem plot:
 

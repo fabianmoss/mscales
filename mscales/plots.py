@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_bars(s, save=False):
+def plot_barcode(s, save=False):
     """
     Bar plot of a scale.
 
@@ -13,9 +13,8 @@ def plot_bars(s, save=False):
     """
 
     _, ax = plt.subplots()
-    ax.bar(np.arange(s.shape[0]), s)
-
-    ax.set(xlabel="Pitch class", ylabel="Frequency")
+    ax.bar(np.arange(s.shape[0]), s, color="k")
+    ax.set(xlabel="Pitch class", yticks=[], ylim=(0, 1))
 
     if save:
         plt.savefig(save)
@@ -40,6 +39,8 @@ def plot_polar(s, save=False):
     stems = ax.stem(thetas, radii, linefmt="k", markerfmt="ok")
     for st in stems:
         st.set_clip_on(False)
+    plt.setp(stems, "linewidth", 3)
+    plt.setp(stems[0], "markersize", 10)
 
     if save:
         plt.savefig(save)
