@@ -1,5 +1,5 @@
 Pitch-Class Sets
-================
+----------------
 
 Apart from the `scales` module discussed
 in Quickstart, `mscales` also contains the `pcsets` module.
