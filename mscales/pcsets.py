@@ -2,43 +2,65 @@ import numpy as np
 from itertools import combinations
 from collections.abc import Iterable
 
-# class PitchClass:
 
-#     def __init__(self, p, c: int = 12):
-#         self.p = p % c
+class PitchClass:
+    """Basic pitch-class representation as integers."""
 
-#     def __repr__(self):
-#         return f"PitchClass({self.p})"
+    def __init__(self, p, c: int = 12):
+        self.c = c
+        self.p = p % self.c
 
-#     def __str__(self):
-#         return str(self.p)
+    def __repr__(self):
+        return f"PitchClass({self.p})"
 
-#     def __neg__(self):
-#         return -self.p
+    def __str__(self):
+        return str(self.p)
 
-# def __add__(self, other):
-#     return self.p + other.i
+    def __neg__(self):
+        return -self.p % self.c
 
-# def __sub__(self, other):
-#     return self.p - other.i
+    def __add__(self, other):
+        if isinstance(other, PitchClassInterval):
+            return (self.p + other.i) % self.c
+        else:
+            raise TypeError(f"Can't add type {type(other)} to pitch class {self.p}.")
 
-# def __lt__(self, other):
-#     """Not always a good idea.
-#     Maybe replace with ternary relation from Harasim et al. (2016)"""
-#     return self.p < other.p
+    def __sub__(self, other):
+        if isinstance(other, PitchClassInterval):
+            return (self.p - other.i) % self.c
+        else:
+            raise TypeError(f"Can't subtract type {type(other)} from pitch class {self.p}.")
 
-# class Interval:
-#     def __init__(self, i, c: int = 12):
-#         self.i = i % c
 
-# def __add__(self, other):
-#     return self.i + other.p
+class PitchClassInterval:
+    """Interval between two pitch classes (mod c)."""
 
-# def __sub__(self, other):
-#     return self.i - other.p
+    def __init__(self, i, c: int = 12):
+        self.c = c
+        self.i = i
+
+    def __repr__(self):
+        return f"Interval({self.i})"
+
+    def __str__(self):
+        return str(self.i)
+
+    def __add__(self, other):
+        if isinstance(other, PitchClassInterval):
+            return (self.i + other.i) % self.c
+        else:
+            raise TypeError(f"Can't add type {type(other)} to interval {self.i}.")
+
+    def __sub__(self, other):
+        if isinstance(other, PitchClassInterval):
+            return self.i - other.i % self.c
+        else:
+            raise TypeError(f"Can't subtract type {type(other)} from interval {self.i}.")
 
 
 class PitchClassSet:
+    """Set of pitch classes."""
+
     def __init__(self, pcset, c: int = 12):
         self.c = c
         self.d = len(pcset)
@@ -184,3 +206,10 @@ if __name__ == "__main__":
     # s = [0, 1, 6, 7, 5, 2, 4, 3, 10, 9, 11, 8]  # 12-tone row
     pcset = PitchClassSet(s)
     pcset.info()
+
+    p = PitchClass(3)
+    i = PitchClassInterval(-2)
+    j = PitchClassInterval(5)
+    print(-p)
+    print(p + i)
+    print(type(i + j))
