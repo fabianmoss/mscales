@@ -132,3 +132,20 @@ def tone_cloud(
 
     # return samples
     return samples  # ipd.Audio(samples, rate=sample_rate)
+
+
+# MINGUS TEST
+# from mingus.containers import Note, NoteContainer
+# from mingus.midi import fluidsynth
+# from mingus.midi.midi_file_out import write_NoteContainer
+
+# # sf = "/home/fmoss/Downloads/FluidR3_GM/FluidR3_GM.sf2"
+# sf = "/home/fmoss/Downloads/nintendo_soundfont.sf2"  # from musical-artifacts.com
+# fluidsynth.init(sf, "alsa")
+# fluidsynth.set_instrument(1, 35, 0)
+
+# if __name__ == "__main__":
+#     m = Note("C#")
+#     m.channel = 1
+#     nc = NoteContainer(m)
+#     write_NoteContainer("test.mid", nc)

@@ -40,6 +40,7 @@ from itertools import combinations
 class PitchClassSet:
     def __init__(self, pcset, c: int = 12):
         self.c = c
+        self.d = len(pcset)
 
         if isinstance(pcset, (set, list, tuple, np.ndarray, PitchClassSet)):
             self.pcs = np.array([p for p in list(pcset)])
@@ -55,13 +56,18 @@ class PitchClassSet:
     def __len__(self):
         return len(self.pcs)
 
+    def to_vector(self):
+        v = np.zeros(self.c, dtype=int)
+        v[self.pcs] += 1
+        return v
+
     def transpose(self, n: int):
         return PitchClassSet((self.pcs + n) % self.c)
 
     def invert(self, n: int = 0):
         return PitchClassSet((n - self.pcs) % self.c)
 
-    def complement(self) -> set:
+    def complement(self):
         return PitchClassSet(np.setdiff1d(np.arange(self.c), self.pcs))
 
     def normal_form(self):
@@ -141,6 +147,8 @@ class PitchClassSet:
         print()
         print("Set Theory")
         print("==========")
+        print("cardin. (d, c)\t:", self.d, self.c)
+        print("pc vector\t:", self.to_vector())
         print("complement\t:", self.complement())
         print("transposed\t:", self.transpose(2))
         print("inverted\t:", self.invert())
@@ -161,13 +169,14 @@ class PitchClassSet:
 if __name__ == "__main__":
 
     # test cases from https://musictheory.pugetsound.edu/mt21c/PrimeForm.html
-    s = {3, 11, 2}
+    # s = {3, 11, 2}
     # s = {11,2,3,7}
-    # s = {8,0,9}
-    s = {0, 2, 4, 5, 7, 9, 11}
+    s = {0, 4, 8}
+    # s = {0, 2, 4, 5, 7, 9, 11}
     # s = {0,1,2}
     # s = {0,4,7}
-    s = {7, 10, 1, 5}
-    s = [0, 1, 6, 7, 5, 2, 4, 3, 10, 9, 11, 8]  # 12-tone row
+    # s = {7, 10, 1, 5}
+    # s = [0, 1, 6, 7, 5, 2, 4, 3, 10, 9, 11, 8]  # 12-tone row
     pcset = PitchClassSet(s)
-    pcset.info()
+    print(pcset.palindrome())
+    # pcset.info()
