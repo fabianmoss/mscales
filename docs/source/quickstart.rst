@@ -108,7 +108,8 @@ or as a polar stem plot:
    :alt: Example scale polar plot.
    :caption: Example scale polar plot.
 
-.. rubric:: Sonification
+Sonification
+============
 
 .. note::
    Currently, we can only synthesize scales with a cardinality of 12
