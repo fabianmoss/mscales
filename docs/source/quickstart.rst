@@ -113,7 +113,7 @@ Sonification
 
 .. note::
    Currently, we can only synthesize scales with a cardinality of 12
-   because ``mscales`` relies on the `tones <https://github.com/eriknyquist/tones>`_ library.
+   because ``mscales`` relies on the `pretty-midi <https://github.com/craffel/pretty-midi/>`_ library.
 
 Sonification, the mapping of generated scales to sound,
 is achieved with the ``sound`` module.
@@ -122,14 +122,12 @@ is achieved with the ``sound`` module.
 
    from mscales.sound import tone_cloud
 
-   t = tone_cloud(scale, save_as="example-scale.wav")
+   t = tone_cloud(scale, save_as="example_scale.mid")
 
 .. raw:: html
 
-    <audio controls="controls">
-      <source src="_static/example-scale.wav" type="audio/wav">
-      Your browser does not support the <code>audio</code> element.
-    </audio>
+   <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
+   <midi-player src="_static/example_scale.mid"></midi-player>
 
 There are lots of parameters to change the sound. They will be documented
 in more detail in future releases.
