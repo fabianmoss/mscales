@@ -18,4 +18,4 @@ sphinx-copybutton
 sphinx-material
 
 # additional libraries used
-pretty_midi
+# pretty_midi
