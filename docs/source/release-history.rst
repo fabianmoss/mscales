@@ -1,7 +1,7 @@
 Release History
 ===============
 
-v1.2.0 (2022-05-24)
+v1.2.1 (2022-05-24)
 -------------------
 
 - replace tones with pretty-midi
