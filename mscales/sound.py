@@ -1,13 +1,14 @@
 import numpy as np
 from numpy.random import default_rng
 import pretty_midi as pm
+from mscales.scales import Scale
 
 
 rng = default_rng(123)
 
 
 def tone_cloud(
-    scale,
+    scale: Scale,
     n_notes: int = 100,
     note_duration: float = 0.15,
     velocity: int = 100,
@@ -15,7 +16,7 @@ def tone_cloud(
     save_as: str = None,
     shepard=True,
     octave_range: list[int] = [4, 7],
-) -> pm.PrettyMIDI():
+) -> pm.PrettyMIDI:
     """Generate a tone cloud from an input scale.
 
     Returns
@@ -67,9 +68,8 @@ def tone_cloud(
 
         if save_as is not None:
             midi.write(save_as)
-            return midi
-        else:
-            return midi
+
+        return midi
 
 
 def generate_shepard_tone(freq=440, dur=0.5, Fs=44100, amp=1):
@@ -89,6 +89,7 @@ def generate_shepard_tone(freq=440, dur=0.5, Fs=44100, amp=1):
         x (np.ndarray): Shepard tone
         t (np.ndarray): Time axis (in seconds)
     """
+
     N = int(dur * Fs)
     t = np.arange(N) / Fs
     num_sin = 1
@@ -99,7 +100,7 @@ def generate_shepard_tone(freq=440, dur=0.5, Fs=44100, amp=1):
         x = x + np.sin(2 * np.pi * freq_lower * t)
         freq_lower = freq_lower / 2
     freq_upper = freq * 2
-    while freq_upper < 20000:
+    while freq_upper < 20_000:
         num_sin += 1
         x = x + np.sin(2 * np.pi * freq_upper * t)
         freq_upper = freq_upper * 2
