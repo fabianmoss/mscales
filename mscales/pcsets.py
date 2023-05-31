@@ -21,13 +21,13 @@ class PitchClass:
 
     def __add__(self, other):
         if isinstance(other, PitchClassInterval):
-            return (self.p + other.i) % self.c
+            return PitchClass((self.p + other.i) % self.c)
         else:
             raise TypeError(f"Can't add type {type(other)} to pitch class {self.p}.")
 
     def __sub__(self, other):
         if isinstance(other, PitchClassInterval):
-            return (self.p - other.i) % self.c
+            return PitchClass((self.p - other.i) % self.c)
         else:
             raise TypeError(f"Can't subtract type {type(other)} from pitch class {self.p}.")
 
@@ -35,7 +35,7 @@ class PitchClass:
 class PitchClassInterval:
     """Interval between two pitch classes (mod c)."""
 
-    def __init__(self, i, c: int = 12):
+    def __init__(self, i: int, c: int = 12):
         self.c = c
         self.i = i
 
@@ -47,7 +47,9 @@ class PitchClassInterval:
 
     def __add__(self, other):
         if isinstance(other, PitchClassInterval):
-            return (self.i + other.i) % self.c
+            return PitchClassInterval((self.i + other.i) % self.c)
+        elif isinstance(other, PitchClass):
+            return PitchClass((self.i + other.p) % self.c)
         else:
             raise TypeError(f"Can't add type {type(other)} to interval {self.i}.")
 
