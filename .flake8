@@ -8,5 +8,14 @@ exclude =
     mscales/_version.py,
     docs/source/conf.py
 max-line-length = 115
-ignore = E203, W503  # Ignore some style 'errors' produced while formatting by 'black'
+# updated according to https://stackoverflow.com/questions/74558565/flake8-error-code-supplied-to-ignore-option-does-not-match-a-z1-30
+ignore = 
+    # line too long (79), we use black (88)
+    E501,
+    # whitespace before ':'
+    E203,
+    # line breake before binary operator
+    W503, 
+    # imports at the top
+    E402,
 per-file-ignores = mscales/__init__.py:F401
