@@ -67,7 +67,9 @@ class PitchClassSet:
         self.c = c
         self.d = len(pcset)
 
-        if isinstance(pcset, (Iterable, PitchClassSet)):
+        if isinstance(pcset, str):
+            self.pcs = np.array([10 if p == "T" else 11 if p == "E" else int(p) for p in list(pcset)])
+        elif isinstance(pcset, (Iterable, PitchClassSet)):
             self.pcs = np.array(list(pcset))
         else:
             raise TypeError(f"I don't recognize the pitch-class input {type(pcset)}.")
