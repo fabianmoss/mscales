@@ -4,7 +4,7 @@ codecov
 coverage
 flake8
 pytest
-sphinx>=7
+sphinx
 twine
 pre-commit
 black
