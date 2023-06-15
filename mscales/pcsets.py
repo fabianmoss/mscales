@@ -31,6 +31,9 @@ class PitchClass:
         else:
             raise TypeError(f"Can't subtract type {type(other)} from pitch class {self.p}.")
 
+    def __eq__(self, other):
+        return self.p == other.p
+
 
 class PitchClassInterval:
     """Interval between two pitch classes (mod c)."""
@@ -58,6 +61,9 @@ class PitchClassInterval:
             return self.i - other.i % self.c
         else:
             raise TypeError(f"Can't subtract type {type(other)} from interval {self.i}.")
+
+    def __eq__(self, other):
+        return self.i == other.i
 
 
 class PitchClassSet:
