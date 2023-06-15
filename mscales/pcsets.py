@@ -43,7 +43,7 @@ class PitchClassInterval:
         self.i = i
 
     def __repr__(self):
-        return f"Interval({self.i})"
+        return f"PitchClassInterval({self.i})"
 
     def __str__(self):
         return str(self.i)

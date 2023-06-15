@@ -20,4 +20,10 @@ Python package to generate, visualize, and sonify musical scales.
 * Documentation: https://mscales.readthedocs.io/en/latest/.
 * Package build with a `cookiecutter template <https://nsls-ii.github.io/scientific-python-cookiecutter/index.html>`_
 
+Notes for development
+---------------------
+
+- `python3 -m pip install -e .``
+- `python3 -m pip install --upgrade -r requirements-dev.txt`
+
 Creator: Fabian C. Moss
