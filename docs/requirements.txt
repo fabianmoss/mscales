@@ -6,3 +6,8 @@ matplotlib
 numpydoc
 sphinx-copybutton
 sphinx_rtd_theme
+sphinx-material
+ipython
+matplotlib
+numpydoc
+sphinx-copybutton
