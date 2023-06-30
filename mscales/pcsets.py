@@ -112,6 +112,9 @@ class PitchClassSet:
         Bring pitch-class set in normal form according to description at:
         https://musictheory.pugetsound.edu/mt21c/NormalForm.html
         """
+
+        self = self.sort()
+
         rotations = np.array([np.roll(self.pcs, i) for i in range(self.pcs.shape[0])])
         for l in range(self.d - 1, 0, -1):
             spans = [ (r[-1] - r[0]) % self.c for r in rotations[:,:l + 1] ]
@@ -140,18 +143,32 @@ class PitchClassSet:
         """
         normal = self.normal_form()
         transposed = normal.transpose(-normal.pcs[0])
+        candidate1 = transposed
 
-        inverted = transposed.invert().sort().normal_form()
-        inverted = inverted.transpose(-inverted.pcs[0]).sort().normal_form()
+        inverted = transposed.invert()
+        sorted = inverted.sort()
 
-        # return transposed, inverted_transposed
+        candidate2 = sorted.normal_form().transpose(-sorted.normal_form().pcs[0])
 
-        if np.array_equal(inverted.pcs, transposed.pcs):
-            return transposed
-        elif np.less_equal((transposed.pcs - inverted.pcs).all(), (inverted.pcs - transposed.pcs).all()):
-            return inverted
+        if np.less_equal(candidate1.pcs, candidate2.pcs).all():
+            return candidate1
+        elif np.less_equal(candidate2.pcs, candidate1.pcs).all():
+            return candidate2
         else:
-            return "Something went wrong."
+            return candidate1, candidate2
+
+        # # if there had been more than one candidate for normal form
+        
+        # return sorted.normal_form().transpose(-sorted.normal_form().pcs[0]), transposed
+        #     transposed_inverted = transposed_inverted.sort().normal_form()
+        # # if np.array_equal(inverted.pcs, transposed_inverted.pcs):
+        # #     return transposed
+        # if np.less_equal(transposed.pcs, transposed_inverted.pcs).all():
+        #     return transposed
+        # elif np.less_equal(transposed_inverted.pcs, transposed.pcs).all():
+        #     return transposed_inverted
+        # else:
+        #     return "Something went wrong.", (transposed_inverted.pcs, transposed.pcs)
 
         # The following special cases were taken from https://ianring.com/
         # TODO: Implement special cases!
@@ -219,7 +236,7 @@ if __name__ == "__main__":
 
     # test cases from https://musictheory.pugetsound.edu/mt21c/PrimeForm.html
     # s = {3, 11, 2}
-    s = {11,2,3,7,2}
+    # s = {11,2,3,7,2}
     # s = {2,3,8,9}
     # s = {0, 2, 4}
     s = {0, 1, 4, 6}  # all-interval tetrachord
@@ -230,6 +247,5 @@ if __name__ == "__main__":
     # s = {7, 10, 1, 5}
     # s = [0, 1, 6, 7, 5, 2, 4, 3, 10, 9, 11, 8]  # 12-tone row
     pcset = PitchClassSet(s)
-    
-    print(pcset.prime_form())
-    # pcset.info()
+
+    pcset.info()
