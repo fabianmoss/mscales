@@ -84,8 +84,8 @@ class PitchClassSet:
     def __repr__(self):
         return f"PitchClassSet({self.pcs})"
 
-    def __str__(self):
-        return str(self.pcs)
+    # def __str__(self):
+    #     return str(self.pcs)
 
     def __len__(self):
         return len(self.pcs)
@@ -107,38 +107,51 @@ class PitchClassSet:
     def complement(self):
         return PitchClassSet(np.setdiff1d(np.arange(self.c), self.pcs))
 
-    def normal_form(self):
-
+    def normal_form(self, all=False):
+        """
+        Bring pitch-class set in normal form according to description at:
+        https://musictheory.pugetsound.edu/mt21c/NormalForm.html
+        """
         rotations = np.array([np.roll(self.pcs, i) for i in range(self.pcs.shape[0])])
-
-        for i in range(rotations.shape[1] - 1, 0, -1):
-            min_diff = min([(r[i] - r[0]) % self.c for r in rotations])
-            mask = (rotations[:, i] - rotations[:, 0]) % self.c == min_diff
-
-            if np.array_equal(rotations, rotations[mask]):
-                return PitchClassSet(rotations[0, :])
-            elif rotations.shape[0] > 1:
-                rotations = rotations[mask]
+        for l in range(self.d - 1, 0, -1):
+            spans = [ (r[-1] - r[0]) % self.c for r in rotations[:,:l + 1] ]
+            mask = spans == min(spans)
+            min_span_rotations = rotations[mask]
+            
+            # if there is a tie in the first step and we want to obtain all candidates
+            # (if there are more than one)
+            if (l == self.d - 1) and (all == True) and (min_span_rotations.shape[0] > 1):
+                return min_span_rotations
+            
+            # if there is only one candidate left
+            elif min_span_rotations.shape[0] == 1:
+                return PitchClassSet(min_span_rotations.flatten())
             else:
-                return PitchClassSet(rotations.flatten())
+                continue
+
+            # if there is an absolute tie, chose the one with smaller first element
+        if min_span_rotations.shape[0] > 1:
+            min_idx = np.argmin(min_span_rotations, axis=0)[0]
+            return PitchClassSet(min_span_rotations[min_idx])
 
     def prime_form(self):
         """Prime form of the pitch-class set, after Rahn.
         See also: https://ianring.com/musictheory/scales/#primeform
         """
+        normal = self.normal_form()
+        transposed = normal.transpose(-normal.pcs[0])
 
-        t = self.normal_form()
-        t = t.transpose(-t.pcs[0]).sort()
+        inverted = transposed.invert().sort().normal_form()
+        inverted = inverted.transpose(-inverted.pcs[0]).sort().normal_form()
 
-        i = t.invert().normal_form()
-        i = i.transpose(-i.pcs[0]).sort()
+        # return transposed, inverted_transposed
 
-        if np.array_equal(i.pcs, t.pcs):
-            return t
-        elif np.less_equal((t.pcs - i.pcs).all(), (i.pcs - t.pcs).all()):
-            return i
+        if np.array_equal(inverted.pcs, transposed.pcs):
+            return transposed
+        elif np.less_equal((transposed.pcs - inverted.pcs).all(), (inverted.pcs - transposed.pcs).all()):
+            return inverted
         else:
-            return t
+            return "Something went wrong."
 
         # The following special cases were taken from https://ianring.com/
         # TODO: Implement special cases!
@@ -206,14 +219,17 @@ if __name__ == "__main__":
 
     # test cases from https://musictheory.pugetsound.edu/mt21c/PrimeForm.html
     # s = {3, 11, 2}
-    # s = {11,2,3,7}
+    s = {11,2,3,7,2}
+    # s = {2,3,8,9}
     # s = {0, 2, 4}
     s = {0, 1, 4, 6}  # all-interval tetrachord
     # s = {1,5,6,7} # from Straus, p. 58
     # s = {0, 2, 4, 5, 7, 9, 11}
     # s = {0,1,2}
-    # s = {0,4,7}
+    # s = {6,9,2}
     # s = {7, 10, 1, 5}
     # s = [0, 1, 6, 7, 5, 2, 4, 3, 10, 9, 11, 8]  # 12-tone row
     pcset = PitchClassSet(s)
-    pcset.info()
+    
+    print(pcset.prime_form())
+    # pcset.info()
