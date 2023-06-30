@@ -1,6 +1,11 @@
 Release History
 ===============
 
+v1.4.2 (2023-06-30)
+-------------------
+
+- fix prime-form and normal-form calculations
+
 v1.3.1 (2023-06-14)
 -------------------
 
