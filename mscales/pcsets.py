@@ -236,10 +236,13 @@ if __name__ == "__main__":
 
     # test cases from https://musictheory.pugetsound.edu/mt21c/PrimeForm.html
     # s = {3, 11, 2}
+    # s = {8,0,9}
+    s = "123E"
+    s = "17TE"
     # s = {11,2,3,7,2}
     # s = {2,3,8,9}
     # s = {0, 2, 4}
-    s = {0, 1, 4, 6}  # all-interval tetrachord
+    # s = {0, 1, 4, 6}  # all-interval tetrachord
     # s = {1,5,6,7} # from Straus, p. 58
     # s = {0, 2, 4, 5, 7, 9, 11}
     # s = {0,1,2}
