@@ -74,6 +74,7 @@ class PitchClassSet:
         self.d = len(pcset)
 
         if isinstance(pcset, str):
+            assert all(x in [str(i) for i in range(10)] + ["T"] + ["E"] for x in list(pcset)), "Some pitch classes are not valid."
             self.pcs = np.array([10 if p == "T" else 11 if p == "E" else int(p) for p in list(pcset)])
         elif isinstance(pcset, (Iterable, PitchClassSet)):
             self.pcs = np.array(list(pcset))
