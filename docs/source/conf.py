@@ -70,7 +70,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "mscales"
-copyright = "2022, Fabian C. Moss"
+copyright = "2023, Fabian C. Moss"
 author = "Fabian C. Moss"
 
 # The version info for the project you're documenting, acts as replacement for
