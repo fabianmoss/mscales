@@ -23,7 +23,7 @@ Python package to generate, visualize, and sonify musical scales.
 Notes for development
 ---------------------
 
-- `python3 -m pip install -e .``
+- `python3 -m pip install -e .`
 - `python3 -m pip install --upgrade -r requirements-dev.txt`
 
 Creator: Fabian C. Moss
