@@ -74,7 +74,9 @@ class PitchClassSet:
         self.d = len(pcset)
 
         if isinstance(pcset, str):
-            assert all(x in [str(i) for i in range(10)] + ["T"] + ["E"] for x in list(pcset)), "Some pitch classes are not valid."
+            assert all(
+                x in [str(i) for i in range(10)] + ["T"] + ["E"] for x in list(pcset)
+            ), "Some pitch classes are not valid."
             self.pcs = np.array([10 if p == "T" else 11 if p == "E" else int(p) for p in list(pcset)])
         elif isinstance(pcset, (Iterable, PitchClassSet)):
             self.pcs = np.array(list(pcset))
@@ -89,6 +91,10 @@ class PitchClassSet:
 
     def __len__(self):
         return len(self.pcs)
+
+    def __eq__(self, other) -> bool:
+        if isinstance(other, PitchClassSet):
+            return self.pcs == other.pcs
 
     def sort(self):
         return PitchClassSet(np.sort(self.pcs))
@@ -116,16 +122,15 @@ class PitchClassSet:
         self = self.sort()
 
         rotations = np.array([np.roll(self.pcs, i) for i in range(self.pcs.shape[0])])
-        for l in range(self.d - 1, 0, -1):
-            spans = [ (r[-1] - r[0]) % self.c for r in rotations[:,:l + 1] ]
+        for length in range(self.d - 1, 0, -1):
+            spans = [(r[-1] - r[0]) % self.c for r in rotations[:, : length + 1]]
             mask = spans == min(spans)
             min_span_rotations = rotations[mask]
-            
+
             # if there is a tie in the first step and we want to obtain all candidates
             # (if there are more than one)
-            if (l == self.d - 1) and (all == True) and (min_span_rotations.shape[0] > 1):
+            if (length == self.d - 1) and all and (min_span_rotations.shape[0] > 1):
                 return min_span_rotations
-            
             # if there is only one candidate left
             elif min_span_rotations.shape[0] == 1:
                 return PitchClassSet(min_span_rotations.flatten())
@@ -158,7 +163,7 @@ class PitchClassSet:
             return candidate1, candidate2
 
         # # if there had been more than one candidate for normal form
-        
+
         # return sorted.normal_form().transpose(-sorted.normal_form().pcs[0]), transposed
         #     transposed_inverted = transposed_inverted.sort().normal_form()
         # # if np.array_equal(inverted.pcs, transposed_inverted.pcs):

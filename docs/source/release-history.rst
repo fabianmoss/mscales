@@ -1,6 +1,11 @@
 Release History
 ===============
 
+v1.3.3 (2023-07-05)
+-------------------
+
+- enable comparison of PitchClassSets
+
 v1.3.2 (2023-06-30)
 -------------------
 
