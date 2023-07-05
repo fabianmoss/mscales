@@ -94,7 +94,7 @@ class PitchClassSet:
 
     def __eq__(self, other) -> bool:
         if isinstance(other, PitchClassSet):
-            return self.pcs == other.pcs
+            return np.array_equal(self.pcs, other.pcs)
 
     def sort(self):
         return PitchClassSet(np.sort(self.pcs))
