@@ -73,6 +73,9 @@ class PitchClassSet:
         self.c = c
         self.d = len(pcset)
 
+        if isinstance(pcset, Iterable):
+            pcset = set(pcset)
+
         if isinstance(pcset, str):
             assert all(
                 x in [str(i) for i in range(10)] + ["T"] + ["E"] for x in list(pcset)
@@ -121,6 +124,11 @@ class PitchClassSet:
 
         self = self.sort()
 
+        if len(self.pcs) == 0:
+            raise "PitchClassSet is empty!"
+        elif len(self.pcs) == 1:
+            return self
+
         rotations = np.array([np.roll(self.pcs, i) for i in range(self.pcs.shape[0])])
         for length in range(self.d - 1, 0, -1):
             spans = [(r[-1] - r[0]) % self.c for r in rotations[:, : length + 1]]
@@ -146,6 +154,15 @@ class PitchClassSet:
         """Prime form of the pitch-class set, after Rahn.
         See also: https://ianring.com/musictheory/scales/#primeform
         """
+
+        if len(self.pcs) == 0:
+            return "PitchClassSet is empty!"
+        elif len(self.pcs) == 1:
+            # TODO: transoposition should know whether it operates
+            # on Pitches, PitchSets, or PitchClass sets, and take the modulo
+            # from the Class
+            return self.transpose(-self.pcs[0] % self.c)
+
         normal = self.normal_form()
         transposed = normal.transpose(-normal.pcs[0])
         candidate1 = transposed
