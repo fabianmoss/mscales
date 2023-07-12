@@ -32,18 +32,18 @@ sys.path.insert(0, os.path.abspath("../../mscales/"))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    "sphinx_material",
+    # "sphinx_material",
     "sphinx.ext.autodoc",
-    "sphinx.ext.autosummary",
-    "sphinx.ext.githubpages",
-    "sphinx.ext.intersphinx",
-    "sphinx.ext.mathjax",
-    "sphinx.ext.viewcode",
-    "IPython.sphinxext.ipython_directive",
-    "IPython.sphinxext.ipython_console_highlighting",
+    # "sphinx.ext.autosummary",
+    # "sphinx.ext.githubpages",
+    # "sphinx.ext.intersphinx",
+    # "sphinx.ext.mathjax",
+    # "sphinx.ext.viewcode",
+    # "IPython.sphinxext.ipython_directive",
+    # "IPython.sphinxext.ipython_console_highlighting",
     "matplotlib.sphinxext.plot_directive",
-    "numpydoc",
-    "sphinx_copybutton",
+    # "numpydoc",
+    # "sphinx_copybutton",
 ]
 
 import sphinx_material
@@ -67,7 +67,7 @@ templates_path = ["_templates"]
 source_suffix = ".rst"
 
 # The master toctree document.
-master_doc = "index.rst"
+master_doc = "index"
 
 # General information about the project.
 project = "mscales"
