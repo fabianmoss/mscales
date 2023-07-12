@@ -220,60 +220,50 @@ class PitchClassSet:
     def matrix(self):
         return np.asarray([self.transpose(-i).pcs for i in self.pcs])
 
-    def plot(self, kind="lollipop", save=False):
+    def plot(self, kind="area", save=False):
+        """This function offers various means for visualizing pitch-class sets.
+
+        Args:
+            kind (str, optional): What kind of visualization, see documentation for examples. Defaults to "area".
+            save (bool/str, optional): Given a file path, will try to save the figure at this location. Defaults to False.
+
+        Returns:
+            plt.axis: _matplotlib_ axis object
+        """
+
+        if kind == "bar":
+            _, ax = plt.subplots()
+            ax.bar(np.arange(self.c), self.to_vector(), color="k")
+            ax.set(xlabel="Pitch class", yticks=[], ylim=(0, 1))
+            return ax
+
+        _, ax = plt.subplots(subplot_kw={"projection": "polar", "clip_on": False})
+        ax.set_theta_direction(-1)
+        ax.set_theta_zero_location("N")
+        ax.set_yticklabels([])
+        ax.set_ylim(0, 1)
+        plt.thetagrids(np.linspace(0, 360, self.c, endpoint=False), np.arange(self.c))
+
+        # data
+        thetas = [k / self.c * 2 * np.pi for k in np.flatnonzero(self.to_vector())]
+        radii = [1 for _ in range(len(thetas))]
 
         if kind == "lollipop":
-            # c = s.shape[0]
-
-            # figure and axis settings
-            _, ax = plt.subplots(subplot_kw={"projection": "polar", "clip_on": False})
-            ax.set_theta_direction(-1)
-            ax.set_theta_zero_location("N")
-            ax.set_yticklabels([])
-            ax.set_ylim(0, 1)
-            plt.thetagrids(np.linspace(0, 360, self.c, endpoint=False), np.arange(self.c))
-
-            # data
-            thetas = [k / self.c * 2 * np.pi for k in np.flatnonzero(self.to_vector())]
-            radii = np.ones(len(thetas))
-
             stems = ax.stem(thetas, radii, linefmt="k", markerfmt="ok")
             for st in stems:
                 st.set_clip_on(False)
             plt.setp(stems, "linewidth", 3)
             plt.setp(stems[0], "markersize", 10)
-        if kind == "area":
-            # c = s.shape[0]
-
-            # figure and axis settings
-            _, ax = plt.subplots(subplot_kw={"projection": "polar", "clip_on": False})
-            ax.set_theta_direction(-1)
-            ax.set_theta_zero_location("N")
-            ax.set_yticklabels([])
-            ax.set_ylim(0, 1)
-            plt.thetagrids(np.linspace(0, 360, self.c, endpoint=False), np.arange(self.c))
-
-            # data
-            thetas = [k / self.c * 2 * np.pi for k in np.flatnonzero(self.to_vector())]
-            radii = [1 for _ in range(len(thetas))]
-
+            return ax
+        elif kind == "area":
             thetas += thetas[:1]
             radii += radii[:1]
-
             ax.plot(thetas, radii, c="k", zorder=5)
             ax.fill(thetas, radii, alpha=0.75, zorder=4)
-
-        elif kind == "bar":
-            _, ax = plt.subplots()
-            ax.bar(np.arange(self.c), self.to_vector(), color="k")
-            ax.set(xlabel="Pitch class", yticks=[], ylim=(0, 1))
-
         else:
             print("I don't recognize the plot kind." "Valid values are 'polar' and 'bar'.")
-
         if save:
             plt.savefig(save)
-        plt.show()
 
     def info(self):
         print("=" * len(repr(self)))
@@ -316,6 +306,8 @@ if __name__ == "__main__":
     # s = {1,5,6,7} # from Straus, p. 58
     # s = {0, 2, 4, 5, 7, 9, 11}
     # s = {0,1,2}
+    s = "147T"
+    s = "02479"
     # s = {6,9,2}
     # s = {7, 10, 1, 5}
     # s = [0, 1, 6, 7, 5, 2, 4, 3, 10, 9, 11, 8]  # 12-tone row
@@ -323,4 +315,5 @@ if __name__ == "__main__":
     pcset = PitchClassSet(s)
     pcset.info()
 
-    print(pcset)
+    ax = pcset.plot(kind="area")
+    plt.show()
