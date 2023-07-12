@@ -10,4 +10,3 @@ sphinx-material
 ipython
 matplotlib
 numpydoc
-sphinx-copybutton
