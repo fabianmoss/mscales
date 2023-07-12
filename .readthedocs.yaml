@@ -5,6 +5,18 @@
 # Required
 version: 2
 
+
+version: 2
+
+python:
+  install:
+    - requirements: docs/requirements.txt
+    - method: pip
+      path: .
+      extra_requirements:
+        - docs
+  system_packages: true
+
 # Set the version of Python and other tools you might need
 build:
   os: ubuntu-22.04
