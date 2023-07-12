@@ -1,6 +1,12 @@
 Release History
 ===============
 
+v1.3.6 (2023-07-12)
+-------------------
+
+- fix normal form bugs
+- add plotting functionality for PitchClassSets
+
 v1.3.5 (2023-07-12)
 -------------------
 
