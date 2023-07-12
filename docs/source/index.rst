@@ -1,24 +1,20 @@
-=======
-mscales
-=======
+.. mscales documentation master file, created by
+   sphinx-quickstart on Wed Jul 12 16:19:26 2023.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
 
-``mscales`` is a Python package to generate, visualize,
-and sonify musical scales.
-
-.. image:: _static/sharon-mccutcheon-igBvG1AKTY8-unsplash.jpg
-   :align: center
-   :alt: Photo by `Sharon McCutcheon <https://unsplash.com/@sharonmccutcheon>`_.
+Welcome to mscales's documentation!
+===================================
 
 .. toctree::
-   :caption: Contents
    :maxdepth: 2
+   :caption: Contents:
 
-   quickstart
-   scales
-   pcsets
 
-.. toctree::
-   :maxdepth: 1
-   :hidden:
 
-   release-history
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
