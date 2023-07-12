@@ -2,6 +2,9 @@ import numpy as np
 from itertools import combinations
 from collections.abc import Iterable
 import matplotlib.pyplot as plt
+import pretty_midi as pm
+
+rng = np.random.default_rng()
 
 
 class PitchClass:
@@ -265,6 +268,57 @@ class PitchClassSet:
         if save:
             plt.savefig(save)
 
+    def play(
+        self,
+        mode: str = "cloud",
+        n_notes: int = 100,
+        note_duration: float = 0.15,
+        velocity: int = 100,
+        instrument_name: str = "Acoustic Grand Piano",
+        save_as: str = None,
+    ):
+
+        if mode == "cloud":
+            starts = np.arange(n_notes) * note_duration  # onsets
+            ends = starts + note_duration  # offsets
+
+            pitches = [x for x in rng.choice(np.nonzero(self.to_vector())[0], size=n_notes)]
+            octaves = rng.choice(np.arange(3, 7), size=n_notes)
+            midi_pitches = [(p + 12 * o) for p, o in list(zip(pitches, octaves))]
+        elif mode == "chord":
+            pitches = self.pcs
+            octaves = [4] * pitches.shape[0]
+            midi_pitches = [(p + 12 * o) for p, o in list(zip(pitches, octaves))]
+
+            starts = [0] * pitches.shape[0]
+            ends = [note_duration] * pitches.shape[0]
+
+        # Create a PrettyMIDI object
+        midi = pm.PrettyMIDI()
+
+        # Create an Instrument instance for an instrument
+        assert (
+            instrument_name in pm.constants.INSTRUMENT_MAP
+        ), f"Instrument must be in {pm.constants.INSTRUMENT_MAP}"
+        # instrument_code = pm.constants.INSTRUMENT_MAP.index(instrument_name)
+
+        program = pm.instrument_name_to_program(instrument_name)
+        instrument = pm.Instrument(program=program)
+
+        for mp, s, e in zip(midi_pitches, starts, ends):
+            # Create a Note instance for this note, starting at `s` and ending at `e`.
+            note = pm.Note(pitch=mp, velocity=velocity, start=s, end=e)
+            # Add it to instrument
+            instrument.notes.append(note)
+
+        # Add the instrument to the PrettyMIDI object
+        midi.instruments.append(instrument)
+
+        if save_as is not None:
+            midi.write(save_as)
+        else:
+            return midi
+
     def info(self):
         print("=" * len(repr(self)))
         print(repr(self))
@@ -308,12 +362,14 @@ if __name__ == "__main__":
     # s = {0,1,2}
     s = "147T"
     s = "02479"
-    # s = {6,9,2}
+    s = {6, 9, 2}
     # s = {7, 10, 1, 5}
     # s = [0, 1, 6, 7, 5, 2, 4, 3, 10, 9, 11, 8]  # 12-tone row
 
     pcset = PitchClassSet(s)
     pcset.info()
 
-    ax = pcset.plot(kind="area")
-    plt.show()
+    # ax = pcset.plot(kind="area")
+    # plt.show()
+
+    pcset.play(save_as="test.mid", mode="chord")

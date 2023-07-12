@@ -16,6 +16,3 @@ matplotlib
 numpydoc
 sphinx-copybutton
 sphinx-material
-
-# additional libraries used
-# pretty_midi
