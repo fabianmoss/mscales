@@ -5,7 +5,9 @@ import matplotlib.pyplot as plt
 
 
 class PitchClass:
-    """Basic pitch-class representation as integers."""
+    """
+    Basic pitch-class representation as integers.
+    """
 
     def __init__(self, p, c: int = 12):
         self.c = c
@@ -37,7 +39,9 @@ class PitchClass:
 
 
 class PitchClassInterval:
-    """Interval between two pitch classes (mod c)."""
+    """
+    Interval between two pitch classes.
+    """
 
     def __init__(self, i: int, c: int = 12):
         self.c = c
@@ -68,7 +72,9 @@ class PitchClassInterval:
 
 
 class PitchClassSet:
-    """Set of pitch classes."""
+    """
+    Set of pitch classes.
+    """
 
     def __init__(self, pcset, c: int = 12):
         self.c = c
@@ -87,8 +93,8 @@ class PitchClassSet:
     def __repr__(self):
         return f"PitchClassSet({self.pcs})"
 
-    # def __str__(self):
-    #     return str(self.pcs)
+    def __str__(self):
+        return str(set(self.pcs))
 
     def __len__(self):
         return len(self.pcs)
@@ -316,3 +322,5 @@ if __name__ == "__main__":
 
     pcset = PitchClassSet(s)
     pcset.info()
+
+    print(pcset)
