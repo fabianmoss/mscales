@@ -2,7 +2,7 @@ mscales
 
 # These are dependencies of various sphinx extensions for documentation.
 # ipython
-# matplotlib
+matplotlib
 # numpydoc
 # sphinx-copybutton
 # sphinx_rtd_theme
