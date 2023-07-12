@@ -1,6 +1,12 @@
 Release History
 ===============
 
+v1.3.7 (2023-07-21)
+-------------------
+
+- fix build of documentation
+- rename `pcsets` module to `basic`
+
 v1.3.6 (2023-07-12)
 -------------------
 
