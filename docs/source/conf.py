@@ -28,6 +28,8 @@ sys.path.insert(0, os.path.abspath("../../mscales/"))
 #
 # needs_sphinx = '1.0'
 
+import sphinx_material
+
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
@@ -45,8 +47,6 @@ extensions = [
     # "numpydoc",
     # "sphinx_copybutton",
 ]
-
-import sphinx_material
 
 # Configuration options for plot_directive. See:
 # https://github.com/matplotlib/matplotlib/blob/f3ed922d935751e08494e5fb5311d3050a3b637b/lib/matplotlib/sphinxext/plot_directive.py#L81
