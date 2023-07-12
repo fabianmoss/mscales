@@ -15,7 +15,7 @@ and sonify musical scales.
 
    quickstart
    scales
-   pcsets
+   basic
 
 .. toctree::
    :maxdepth: 1

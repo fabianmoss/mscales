@@ -3,14 +3,14 @@ Basic objects
 
 .. note::
     Apart from the ``scales`` module discussed
-    in Quickstart, ``mscales`` also contains the ``pcsets`` module.
+    in Quickstart, ``mscales`` also contains the ``basic`` module.
     At the moment, they are alternatives with partially overlapping
     functionalities but they will be merged in the futured.
     
     As a rule of thumb, use the ``scales`` module whenever possible
-    and only revert to ``pcsets`` when you need very specific things.
+    and only revert to ``basic`` when you need very specific things.
 
-The ``pcsets`` module implements classic definitions of
+The ``basic`` module implements classic definitions of
 and transformations on pitch-class sets known from
 `Set Theory <https://en.wikipedia.org/wiki/Set_theory_(music)>`_.
 
@@ -123,6 +123,6 @@ and their results are stored in the ``.info()`` method.
 
 All methods currently implemented are:
 
-.. automodule:: pcsets
+.. automodule:: basic
     :members:
     :undoc-members:
