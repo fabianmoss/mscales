@@ -21,7 +21,6 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath("../../mscales/"))
-import sphinx_material
 
 # -- General configuration ------------------------------------------------
 
@@ -46,6 +45,8 @@ extensions = [
     "numpydoc",
     "sphinx_copybutton",
 ]
+
+import sphinx_material
 
 # Configuration options for plot_directive. See:
 # https://github.com/matplotlib/matplotlib/blob/f3ed922d935751e08494e5fb5311d3050a3b637b/lib/matplotlib/sphinxext/plot_directive.py#L81
