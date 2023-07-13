@@ -320,39 +320,43 @@ class PitchClassSet:
             return midi
 
     def info(self):
-        print("=" * len(repr(self)))
-        print(repr(self))
-        print("=" * len(repr(self)))
-        print()
-        print("Set Theory")
-        print("==========")
-        print("cardin. (d, c)\t:", self.d, self.c)
-        print("pc vector\t:", self.to_vector())
-        print("complement\t:", self.complement())
-        print("transposed\t:", self.transpose(2))
-        print("inverted\t:", self.invert())
-        print("T2I\t\t:", self.invert(2))
-        print("normal form\t:", self.normal_form())
-        print("prime form\t:", self.prime_form())
-        print("interval vector\t:", self.interval_vector())
-        print()
-        print("Serialism")
-        print("=========")
-        print("original\t:", self)
-        print("retrograde\t:", self.retrograde())
-        print("inversion\t:", self.inversion())
-        print("retro.-inv.\t:", self.inversion().retrograde())
-        print("matrix\t\t:", str(self.matrix()).replace("\n", "\n\t\t"))
+        """Returns all sorts of information on the PitchClassSet."""
+        tab = "\n\t\t  "
+        s = "=" * len(repr(self)) + "\n"
+        s += repr(self) + "\n"
+        s += "=" * len(repr(self)) + "\n\n"
+
+        s += "Set Theory" + "\n"
+        s += "==========" + "\n"
+        s += f"cardin. (d, c)\t: {self.d}, {self.c}" + "\n"
+        s += f"pc vector\t: {self.to_vector()}" + "\n"
+        s += f"complement\t: {self.complement()}" + "\n"
+        s += f"transposed\t: {self.transpose(2)}" + "\n"
+        s += f"inverted\t: {self.invert()}" + "\n"
+        s += f"T2I\t\t: {self.invert(2)}" + "\n"
+        s += f"normal form\t: {self.normal_form()}" + "\n"
+        s += f"prime form\t: {self.prime_form()}" + "\n"
+        s += f"interval vector\t: {self.interval_vector()}" + "\n\n"
+
+        s += "Serialism" + "\n"
+        s += "=========" + "\n"
+        s += f"original\t: {self}" + "\n"
+        s += f"retrograde\t: {self.retrograde()}" + "\n"
+        s += f"inversion\t: {self.inversion()}" + "\n"
+        s += f"retro.-inv.\t: {self.inversion().retrograde()}" + "\n"
+        s += f"matrix\t\t: {str(self.matrix()).replace(chr(10), tab)}"
+
+        return s
 
 
 if __name__ == "__main__":
 
     # test cases from https://musictheory.pugetsound.edu/mt21c/PrimeForm.html
     s = {3, 11, 2}
-    s = {8, 0, 9}
-    s = "123E"
-    s = "17TE"
-    s = "941"
+    # s = {8, 0, 9}
+    # s = "123E"
+    # s = "17TE"
+    # s = "941"
     # s = {11,2,3,7,2}
     # s = {2,3,8,9}
     # s = {0, 2, 4}
@@ -360,16 +364,16 @@ if __name__ == "__main__":
     # s = {1,5,6,7} # from Straus, p. 58
     # s = {0, 2, 4, 5, 7, 9, 11}
     # s = {0,1,2}
-    s = "147T"
-    s = "02479"
-    s = {6, 9, 2}
+    # s = "147T"
+    # s = "02479"
+    # s = {6, 9, 2}
     # s = {7, 10, 1, 5}
     # s = [0, 1, 6, 7, 5, 2, 4, 3, 10, 9, 11, 8]  # 12-tone row
 
     pcset = PitchClassSet(s)
-    pcset.info()
+    print(pcset.info())
 
     # ax = pcset.plot(kind="area")
     # plt.show()
 
-    pcset.play(save_as="test.mid", mode="chord")
+    # pcset.play(save_as="test.mid", mode="cloud")
