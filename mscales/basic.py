@@ -223,7 +223,7 @@ class PitchClassSet:
     def matrix(self):
         return np.asarray([self.transpose(-i).pcs for i in self.pcs])
 
-    def plot(self, kind="area", save=False):
+    def plot(self, kind: str = "area", save: bool = False):
         """This function offers various means for visualizing pitch-class sets.
 
         Args:
