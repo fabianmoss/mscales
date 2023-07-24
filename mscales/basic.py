@@ -93,7 +93,8 @@ class PitchClassSet:
         else:
             raise TypeError(f"I don't recognize the pitch-class input {type(pcset)}.")
 
-        self.is_maximally_even = self.maximal_even()
+        self.maximally_even = self.maximally_even()
+        
 
     def __repr__(self):
         return f"PitchClassSet({self.pcs})"
@@ -223,9 +224,19 @@ class PitchClassSet:
 
         maximal_even = False
         for s in D:
-            if np.array_equal(s, self.pcs):
+            if np.array_equal(s.sort(), self.pcs.sort()):
                 maximal_even = True
         return maximal_even
+
+    def spectrum(self, i):
+        """
+        Returns the spectrum of generic interval i,
+        given chromatic cardinality c and diatonic cardinality d.
+        """
+
+        assert i in range(self.d), f"Generic interval i={i} has to be between 0 and {self.d-1}."
+
+        return { (k - j) % self.c for j, k in zip(self.pcs, np.roll(self.pcs, -i)) }
 
     def sum(self) -> int:
         return sum(self.pcs)
@@ -355,6 +366,10 @@ class PitchClassSet:
         s += f"prime form\t: {self.prime_form()}" + "\n"
         s += f"interval vector\t: {self.interval_vector()}" + "\n\n"
 
+        s += "Diatonic Scale Theory" + "\n"
+        s += "====================="  + "\n"
+        s += f"Maximally even: {str(self.is_maximally_even)}" + "\n\n" 
+
         s += "Serialism" + "\n"
         s += "=========" + "\n"
         s += f"original\t: {self}" + "\n"
@@ -379,7 +394,7 @@ if __name__ == "__main__":
     # s = {0, 2, 4}
     # s = {0, 1, 4, 6}  # all-interval tetrachord
     # s = {1,5,6,7} # from Straus, p. 58
-    # s = {0, 2, 4, 5, 7, 9, 11}
+    s = {0, 2, 4, 5, 7, 9, 11}
     # s = {0,1,2}
     # s = "147T"
     # s = "02479"
@@ -396,12 +411,21 @@ if __name__ == "__main__":
     # pcset.play(save_as="test.mid", mode="cloud")
 
     ## maximally even test
-    s = PitchClassSet("048")
-    t = PitchClassSet("1234")
-    r = PitchClassSet("024579E")
-    p = PitchClassSet("1368T")
+    s = PitchClassSet("804")
+    # t = PitchClassSet("1234")
+    dia = PitchClassSet("024579E")
+    # # p = PitchClassSet("1368T")
+    # oct = PitchClassSet("0134679T")
+    # hex = PitchClassSet("E03478")
+    # ten = PitchClassSet("02468", c=10)
+    # chr = PitchClassSet("1023456789TE")
 
-    print(s.is_maximally_even)
-    print(t.is_maximally_even)
-    print(r.is_maximally_even)
-    print(p.maximally_even())
+    # print(oct.maximally_even)
+    # print(hex.maximally_even)
+    # print(ten.maximally_even)
+    # print(p.maximally_even())
+    print(dia.spectrum(i=4))
+
+    # for p in (oct, hex, ten, r):
+    #     p.plot(kind="area")
+    #     plt.show()
