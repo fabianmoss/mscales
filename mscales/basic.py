@@ -219,11 +219,11 @@ class PitchClassSet:
         D = [ [ np.floor((self.c * k + m) / self.d).astype(int) for k in range(self.d) ] for m in range(self.c) ]
         D = [ np.array(s) for s in set(tuple(i) for i in D) ]
 
-        maximal_even = False
         for s in D:
-            if np.array_equal(s.sort(), self.pcs.sort()):
-                maximal_even = True
-        return maximal_even
+            if set(s) == set(self.pcs):
+                return True
+            else:
+                return False
 
     def spectrum(self, i):
         """
@@ -374,7 +374,9 @@ class PitchClassSet:
 
         s += "Diatonic Scale Theory" + "\n"
         s += "====================="  + "\n"
-        s += f"Maximally even: {str(self.is_maximally_even)}" + "\n\n" 
+        s += f"Maximally even: {str(self.maximally_even())}" + "\n" 
+        s += f"Spectrum (step): {str(self.spectrum(i=1))}" + "\n"
+        s += f"Myhill's property: {str(self.myhill())}" + "\n\n" 
 
         s += "Serialism" + "\n"
         s += "=========" + "\n"
@@ -398,19 +400,18 @@ if __name__ == "__main__":
     # s = {11,2,3,7,2}
     # s = {2,3,8,9}
     # s = {0, 2, 4}
-    # s = {0, 1, 4, 6}  # all-interval tetrachord
+    s = {0, 1, 4, 6}  # all-interval tetrachord
     # s = {1,5,6,7} # from Straus, p. 58
-    s = {0, 2, 4, 5, 7, 9, 11}
-    # s = {0,1,2}
+    # s = {0, 2, 4, 5, 7, 9, 11}
+    s = {0,1,2} # TODO: This wrongly returns True for both Maximal Evenness and Myhill's property!
     # s = "147T"
     # s = "02479"
-    s = {6, 9, 2}
+    # s = {6, 9, 2}
     # s = {7, 10, 1, 5}
     # s = [0, 1, 6, 7, 5, 2, 4, 3, 10, 9, 11, 8]  # 12-tone row
 
     pcset = PitchClassSet(s)
-    # print(pcset.info())
-
+    print(pcset.info())
     # ax = pcset.plot(kind="area")
     # plt.show()
 
@@ -418,10 +419,11 @@ if __name__ == "__main__":
 
     ## maximally even test
     # t = PitchClassSet("1234")
-    dia = PitchClassSet("024579E")
-    p = PitchClassSet("1368T")
-    oct = PitchClassSet("0134679T")
-    hex = PitchClassSet("E03478")
+    # dia = PitchClassSet("024579E")
+    # p = PitchClassSet("1368T")
+    # oct = PitchClassSet("0134679T")
+    # print(dia.info())
+    # hex = PitchClassSet("E03478")
     # ten = PitchClassSet("02468", c=10)
     # chr = PitchClassSet("1023456789TE")
 
@@ -429,7 +431,7 @@ if __name__ == "__main__":
     # print(hex.maximally_even)
     # print(ten.maximally_even)
     # print(p.maximally_even())
-    print(pcset.myhill())
+    # print(pcset.myhill())
 
     # for p in (oct, hex, ten, r):
     #     p.plot(kind="area")
