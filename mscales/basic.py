@@ -91,10 +91,7 @@ class PitchClassSet:
         elif isinstance(pcset, (Iterable, PitchClassSet)):
             self.pcs = np.array([int(p) for p in pcset])
         else:
-            raise TypeError(f"I don't recognize the pitch-class input {type(pcset)}.")
-
-        self.maximally_even = self.maximally_even()
-        
+            raise TypeError(f"I don't recognize the pitch-class input {type(pcset)}.")        
 
     def __repr__(self):
         return f"PitchClassSet({self.pcs})"
@@ -237,6 +234,15 @@ class PitchClassSet:
         assert i in range(self.d), f"Generic interval i={i} has to be between 0 and {self.d-1}."
 
         return { (k - j) % self.c for j, k in zip(self.pcs, np.roll(self.pcs, -i)) }
+
+    def myhill(self):
+        """
+        Returns whether pitch-class set has Myhill's property.
+        """
+
+        specs = set([ len(self.spectrum(i=i)) for i in range(1,self.d) ])
+        
+        return True if specs == {2} else False
 
     def sum(self) -> int:
         return sum(self.pcs)
@@ -398,11 +404,11 @@ if __name__ == "__main__":
     # s = {0,1,2}
     # s = "147T"
     # s = "02479"
-    # s = {6, 9, 2}
+    s = {6, 9, 2}
     # s = {7, 10, 1, 5}
     # s = [0, 1, 6, 7, 5, 2, 4, 3, 10, 9, 11, 8]  # 12-tone row
 
-    # pcset = PitchClassSet(s)
+    pcset = PitchClassSet(s)
     # print(pcset.info())
 
     # ax = pcset.plot(kind="area")
@@ -411,12 +417,11 @@ if __name__ == "__main__":
     # pcset.play(save_as="test.mid", mode="cloud")
 
     ## maximally even test
-    s = PitchClassSet("804")
     # t = PitchClassSet("1234")
     dia = PitchClassSet("024579E")
-    # # p = PitchClassSet("1368T")
-    # oct = PitchClassSet("0134679T")
-    # hex = PitchClassSet("E03478")
+    p = PitchClassSet("1368T")
+    oct = PitchClassSet("0134679T")
+    hex = PitchClassSet("E03478")
     # ten = PitchClassSet("02468", c=10)
     # chr = PitchClassSet("1023456789TE")
 
@@ -424,7 +429,7 @@ if __name__ == "__main__":
     # print(hex.maximally_even)
     # print(ten.maximally_even)
     # print(p.maximally_even())
-    print(dia.spectrum(i=4))
+    print(pcset.myhill())
 
     # for p in (oct, hex, ten, r):
     #     p.plot(kind="area")
