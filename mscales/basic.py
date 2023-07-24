@@ -93,6 +93,8 @@ class PitchClassSet:
         else:
             raise TypeError(f"I don't recognize the pitch-class input {type(pcset)}.")
 
+        self.is_maximally_even = self.maximal_even()
+
     def __repr__(self):
         return f"PitchClassSet({self.pcs})"
 
@@ -209,6 +211,21 @@ class PitchClassSet:
             iv[i - 1] += 1
 
         return iv
+
+    def maximally_even(self):
+        """
+        Calculates all maximally even sets for chromatic cardinality c 
+        and diatonic cardinality d.
+        """
+
+        D = [ [ np.floor((self.c * k + m) / self.d).astype(int) for k in range(self.d) ] for m in range(self.c) ]
+        D = [ np.array(s) for s in set(tuple(i) for i in D) ]
+
+        maximal_even = False
+        for s in D:
+            if np.array_equal(s, self.pcs):
+                maximal_even = True
+        return maximal_even
 
     def sum(self) -> int:
         return sum(self.pcs)
@@ -370,10 +387,21 @@ if __name__ == "__main__":
     # s = {7, 10, 1, 5}
     # s = [0, 1, 6, 7, 5, 2, 4, 3, 10, 9, 11, 8]  # 12-tone row
 
-    pcset = PitchClassSet(s)
-    print(pcset.info())
+    # pcset = PitchClassSet(s)
+    # print(pcset.info())
 
     # ax = pcset.plot(kind="area")
     # plt.show()
 
     # pcset.play(save_as="test.mid", mode="cloud")
+
+    ## maximally even test
+    s = PitchClassSet("048")
+    t = PitchClassSet("1234")
+    r = PitchClassSet("024579E")
+    p = PitchClassSet("1368T")
+
+    print(s.is_maximally_even)
+    print(t.is_maximally_even)
+    print(r.is_maximally_even)
+    print(p.maximally_even())
