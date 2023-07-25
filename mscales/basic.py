@@ -3,6 +3,8 @@ from itertools import combinations
 from collections.abc import Iterable
 import matplotlib.pyplot as plt
 import pretty_midi as pm
+from utils import find_ngrams
+from collections import Counter
 
 rng = np.random.default_rng()
 
@@ -244,6 +246,20 @@ class PitchClassSet:
         
         return True if specs == {2} else False
 
+    def cardinality_equals_variety(self):
+        """
+        Tests if cardinality equals variety holds for PCSet.
+        See: https://en.wikipedia.org/wiki/Cardinality_equals_variety
+        """
+        cev = True
+        for n in range(2,self.d + 1):
+            s = np.append(self.pcs, self.pcs[:n-1])
+            ngrams = find_ngrams(s, n=n)
+            intervals = [ "".join([str((gram[i] - gram[i-1]) % 12) for i in range(1, len(gram))]) for gram in ngrams ]
+            if n != len(Counter(intervals)):
+                return False
+        return True
+
     def sum(self) -> int:
         return sum(self.pcs)
 
@@ -376,7 +392,8 @@ class PitchClassSet:
         s += "====================="  + "\n"
         s += f"Maximally even: {str(self.maximally_even())}" + "\n" 
         s += f"Spectrum (step): {str(self.spectrum(i=1))}" + "\n"
-        s += f"Myhill's property: {str(self.myhill())}" + "\n\n" 
+        s += f"Myhill's property: {str(self.myhill())}" + "\n"
+        s += f"Cardinality equals variety: {str(self.cardinality_equals_variety())}" + "\n\n" 
 
         s += "Serialism" + "\n"
         s += "=========" + "\n"
@@ -403,7 +420,7 @@ if __name__ == "__main__":
     s = {0, 1, 4, 6}  # all-interval tetrachord
     # s = {1,5,6,7} # from Straus, p. 58
     # s = {0, 2, 4, 5, 7, 9, 11}
-    s = {0,1,2} # TODO: This wrongly returns True for both Maximal Evenness and Myhill's property!
+    # s = {0,1,2}
     # s = "147T"
     # s = "02479"
     # s = {6, 9, 2}
@@ -411,6 +428,7 @@ if __name__ == "__main__":
     # s = [0, 1, 6, 7, 5, 2, 4, 3, 10, 9, 11, 8]  # 12-tone row
 
     pcset = PitchClassSet(s)
+    print(pcset.pcs)
     print(pcset.info())
     # ax = pcset.plot(kind="area")
     # plt.show()
@@ -420,9 +438,9 @@ if __name__ == "__main__":
     ## maximally even test
     # t = PitchClassSet("1234")
     # dia = PitchClassSet("024579E")
-    # p = PitchClassSet("1368T")
+    p = PitchClassSet("1368T")
     # oct = PitchClassSet("0134679T")
-    # print(dia.info())
+    print(p.info())
     # hex = PitchClassSet("E03478")
     # ten = PitchClassSet("02468", c=10)
     # chr = PitchClassSet("1023456789TE")
