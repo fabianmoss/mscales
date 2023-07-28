@@ -18,3 +18,19 @@ exclude = '''
   | tests/data
 )/
 '''
+
+[tool.poetry]
+name = "mscales"
+version = "1.3.6"
+description = "Package to analyze pitch-class sets"
+authors = ["Fabian Moss <fabianmoss@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
