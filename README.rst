@@ -1,12 +1,8 @@
-# mscales
+=======
+mscales
+=======
 
-![Travis CI Status](https://app.travis-ci.com/fabianmoss/mscales.svg?branch=main)
-
-![PyPi Status](https://app.travis-ci.com/fabianmoss/mscales.svg?branch=main)
-
-![Documentation Status](https://readthedocs.org/projects/mscales/badge/?version=latest)
-
-<!-- .. image:: https://app.travis-ci.com/fabianmoss/mscales.svg?branch=main
+.. image:: https://app.travis-ci.com/fabianmoss/mscales.svg?branch=main
         :target: https://app.travis-ci.com/fabianmoss/mscales
         :alt: Travis CI Status
 
@@ -16,7 +12,7 @@
 
 .. image:: https://readthedocs.org/projects/mscales/badge/?version=latest
         :target: https://mscales.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status -->
+        :alt: Documentation Status
 
 Python package to generate, visualize, and sonify musical scales.
 
@@ -24,8 +20,9 @@ Python package to generate, visualize, and sonify musical scales.
 * Documentation: https://mscales.readthedocs.io/en/latest/.
 * Package build with a `cookiecutter template <https://nsls-ii.github.io/scientific-python-cookiecutter/index.html>`_
 
-# Notes for development
-
+---------------------
+Notes for development
+---------------------
 
 - `python3 -m pip install -e .`
 - `python3 -m pip install --upgrade -r requirements-dev.txt`
