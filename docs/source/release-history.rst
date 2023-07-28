@@ -1,6 +1,11 @@
 Release History
 ===============
 
+v1.4.0 (2023-07-28)
+-------------------
+
+- add several scale properties to PitchClassSet type
+
 v1.3.7 (2023-07-21)
 -------------------
 
