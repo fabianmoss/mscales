@@ -3,7 +3,7 @@ from itertools import combinations
 from collections.abc import Iterable
 import matplotlib.pyplot as plt
 import pretty_midi as pm
-from utils import find_ngrams
+from .utils import find_ngrams
 from collections import Counter
 
 rng = np.random.default_rng()
@@ -37,7 +37,9 @@ class PitchClass:
         if isinstance(other, PitchClassInterval):
             return PitchClass((self.p - other.i) % self.c)
         else:
-            raise TypeError(f"Can't subtract type {type(other)} from pitch class {self.p}.")
+            raise TypeError(
+                f"Can't subtract type {type(other)} from pitch class {self.p}."
+            )
 
     def __eq__(self, other):
         return self.p == other.p
@@ -70,7 +72,9 @@ class PitchClassInterval:
         if isinstance(other, PitchClassInterval):
             return self.i - other.i % self.c
         else:
-            raise TypeError(f"Can't subtract type {type(other)} from interval {self.i}.")
+            raise TypeError(
+                f"Can't subtract type {type(other)} from interval {self.i}."
+            )
 
     def __eq__(self, other):
         return self.i == other.i
@@ -89,11 +93,13 @@ class PitchClassSet:
             assert all(
                 x in [str(i) for i in range(10)] + ["T"] + ["E"] for x in list(pcset)
             ), "Some pitch classes are not valid."
-            self.pcs = np.array([10 if p == "T" else 11 if p == "E" else int(p) for p in list(pcset)])
+            self.pcs = np.array(
+                [10 if p == "T" else 11 if p == "E" else int(p) for p in list(pcset)]
+            )
         elif isinstance(pcset, (Iterable, PitchClassSet)):
             self.pcs = np.array([int(p) for p in pcset])
         else:
-            raise TypeError(f"I don't recognize the pitch-class input {type(pcset)}.")        
+            raise TypeError(f"I don't recognize the pitch-class input {type(pcset)}.")
 
     def __repr__(self):
         return f"PitchClassSet({self.pcs})"
@@ -138,7 +144,9 @@ class PitchClassSet:
         elif len(self.pcs) == 1:
             return self
         else:
-            rotations = np.array([np.roll(self.pcs, i) for i in range(self.pcs.shape[0])])
+            rotations = np.array(
+                [np.roll(self.pcs, i) for i in range(self.pcs.shape[0])]
+            )
             for length in range(self.d - 1, 0, -1):
                 spans = [(r[-1] - r[0]) % self.c for r in rotations[:, : length + 1]]
                 mask = spans == min(spans)
@@ -214,12 +222,15 @@ class PitchClassSet:
 
     def maximally_even(self):
         """
-        Calculates all maximally even sets for chromatic cardinality c 
+        Calculates all maximally even sets for chromatic cardinality c
         and diatonic cardinality d.
         """
 
-        D = [ [ np.floor((self.c * k + m) / self.d).astype(int) for k in range(self.d) ] for m in range(self.c) ]
-        D = [ np.array(s) for s in set(tuple(i) for i in D) ]
+        D = [
+            [np.floor((self.c * k + m) / self.d).astype(int) for k in range(self.d)]
+            for m in range(self.c)
+        ]
+        D = [np.array(s) for s in set(tuple(i) for i in D)]
 
         for s in D:
             if set(s) == set(self.pcs):
@@ -233,17 +244,19 @@ class PitchClassSet:
         given chromatic cardinality c and diatonic cardinality d.
         """
 
-        assert i in range(self.d), f"Generic interval i={i} has to be between 0 and {self.d-1}."
+        assert i in range(
+            self.d
+        ), f"Generic interval i={i} has to be between 0 and {self.d-1}."
 
-        return { (k - j) % self.c for j, k in zip(self.pcs, np.roll(self.pcs, -i)) }
+        return {(k - j) % self.c for j, k in zip(self.pcs, np.roll(self.pcs, -i))}
 
     def myhill(self):
         """
         Returns whether pitch-class set has Myhill's property.
         """
 
-        specs = set([ len(self.spectrum(i=i)) for i in range(1,self.d) ])
-        
+        specs = set([len(self.spectrum(i=i)) for i in range(1, self.d)])
+
         return True if specs == {2} else False
 
     def cardinality_equals_variety(self):
@@ -251,11 +264,16 @@ class PitchClassSet:
         Tests if cardinality equals variety holds for PCSet.
         See: https://en.wikipedia.org/wiki/Cardinality_equals_variety
         """
-        cev = True
-        for n in range(2,self.d + 1):
-            s = np.append(self.pcs, self.pcs[:n-1])
+
+        for n in range(2, self.d + 1):
+            s = np.append(self.pcs, self.pcs[: n - 1])
             ngrams = find_ngrams(s, n=n)
-            intervals = [ "".join([str((gram[i] - gram[i-1]) % 12) for i in range(1, len(gram))]) for gram in ngrams ]
+            intervals = [
+                "".join(
+                    [str((gram[i] - gram[i - 1]) % 12) for i in range(1, len(gram))]
+                )
+                for gram in ngrams
+            ]
             if n != len(Counter(intervals)):
                 return False
         return True
@@ -314,7 +332,9 @@ class PitchClassSet:
             ax.plot(thetas, radii, c="k", zorder=5)
             ax.fill(thetas, radii, alpha=0.75, zorder=4)
         else:
-            print("I don't recognize the plot kind." "Valid values are 'polar' and 'bar'.")
+            print(
+                "I don't recognize the plot kind." "Valid values are 'polar' and 'bar'."
+            )
         if save:
             plt.savefig(save)
 
@@ -332,7 +352,9 @@ class PitchClassSet:
             starts = np.arange(n_notes) * note_duration  # onsets
             ends = starts + note_duration  # offsets
 
-            pitches = [x for x in rng.choice(np.nonzero(self.to_vector())[0], size=n_notes)]
+            pitches = [
+                x for x in rng.choice(np.nonzero(self.to_vector())[0], size=n_notes)
+            ]
             octaves = rng.choice(np.arange(3, 7), size=n_notes)
             midi_pitches = [(p + 12 * o) for p, o in list(zip(pitches, octaves))]
         elif mode == "chord":
@@ -389,11 +411,14 @@ class PitchClassSet:
         s += f"interval vector\t: {self.interval_vector()}" + "\n\n"
 
         s += "Diatonic Scale Theory" + "\n"
-        s += "====================="  + "\n"
-        s += f"Maximally even: {str(self.maximally_even())}" + "\n" 
+        s += "=====================" + "\n"
+        s += f"Maximally even: {str(self.maximally_even())}" + "\n"
         s += f"Spectrum (step): {str(self.spectrum(i=1))}" + "\n"
         s += f"Myhill's property: {str(self.myhill())}" + "\n"
-        s += f"Cardinality equals variety: {str(self.cardinality_equals_variety())}" + "\n\n" 
+        s += (
+            f"Cardinality equals variety: {str(self.cardinality_equals_variety())}"
+            + "\n\n"
+        )
 
         s += "Serialism" + "\n"
         s += "=========" + "\n"
@@ -435,7 +460,7 @@ if __name__ == "__main__":
 
     # pcset.play(save_as="test.mid", mode="cloud")
 
-    ## maximally even test
+    # maximally even test
     # t = PitchClassSet("1234")
     # dia = PitchClassSet("024579E")
     p = PitchClassSet("1368T")
