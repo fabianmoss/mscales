@@ -2,6 +2,8 @@ mscales
 
 # These are dependencies of various sphinx extensions for documentation.
 # ipython
+numpy
+pretty_midi
 matplotlib
 # numpydoc
 # sphinx-copybutton
