@@ -18,7 +18,7 @@ class TestScalesAll:
     def test_scales_all_c_small(self):
         for c in range(1, 8):
             s = Scales(c=c)
-            result = s.all()
+            s.all()
             assert 2**c == s.n_scales
 
 

@@ -143,7 +143,7 @@ class PitchClassSet:
         self = self.sort()
 
         if len(self.pcs) == 0:
-            raise "PitchClassSet is empty!"
+            raise ValueError("Cannot compute normal form of empty pitch-class set.")
         elif len(self.pcs) == 1:
             return self
         else:
@@ -155,7 +155,7 @@ class PitchClassSet:
                 mask = spans == min(spans)
                 min_span_rotations = rotations[mask]
 
-                # if there is a tie in the first step and we want to obtain all candidates
+                # if there is a tie in the first step, want all candidates
                 # if there is only one candidate left
                 if min_span_rotations.shape[0] == 1:
                     return PitchClassSet(min_span_rotations.flatten())
@@ -163,7 +163,7 @@ class PitchClassSet:
                 elif min_span_rotations.shape[0] > 1:  # (length == self.d - 1) and
                     rotations = min_span_rotations
                 else:
-                    raise "Something went wrong!"
+                    raise RuntimeError("Unexpected state in normal form computation.")
 
                 # if there is an absolute tie, chose the one with smaller first element
             if min_span_rotations.shape[0] > 1:
@@ -229,17 +229,13 @@ class PitchClassSet:
         and diatonic cardinality d.
         """
 
-        D = [
+        d = [
             [np.floor((self.c * k + m) / self.d).astype(int) for k in range(self.d)]
             for m in range(self.c)
         ]
-        D = [np.array(s) for s in set(tuple(i) for i in D)]
+        d = [np.array(s) for s in {tuple(i) for i in d}]
 
-        for s in D:
-            if set(s) == set(self.pcs):
-                return True
-            else:
-                return False
+        return any(set(s) == set(self.pcs) for s in d)
 
     def spectrum(self, i):
         """
@@ -251,16 +247,19 @@ class PitchClassSet:
             self.d
         ), f"Generic interval i={i} has to be between 0 and {self.d - 1}."
 
-        return {(k - j) % self.c for j, k in zip(self.pcs, np.roll(self.pcs, -i))}
+        return {
+            (k - j) % self.c
+            for j, k in zip(self.pcs, np.roll(self.pcs, -i), strict=True)
+        }
 
     def myhill(self):
         """
         Returns whether pitch-class set has Myhill's property.
         """
 
-        specs = set([len(self.spectrum(i=i)) for i in range(1, self.d)])
+        specs = {len(self.spectrum(i=i)) for i in range(1, self.d)}
 
-        return True if specs == {2} else False
+        return specs == {2}
 
     def cardinality_equals_variety(self):
         """
@@ -298,8 +297,8 @@ class PitchClassSet:
         """This function offers various means for visualizing pitch-class sets.
 
         Args:
-            kind (str, optional): What kind of visualization, see documentation for examples. Defaults to "area".
-            save (bool/str, optional): Given a file path, will try to save the figure at this location. Defaults to False.
+            kind: What kind of visualization. Defaults to "area".
+            save: File path to save figure. Defaults to False.
 
         Returns:
             plt.axis: _matplotlib_ axis object
@@ -352,15 +351,13 @@ class PitchClassSet:
             starts = np.arange(n_notes) * note_duration  # onsets
             ends = starts + note_duration  # offsets
 
-            pitches = [
-                x for x in rng.choice(np.nonzero(self.to_vector())[0], size=n_notes)
-            ]
+            pitches = list(rng.choice(np.nonzero(self.to_vector())[0], size=n_notes))
             octaves = rng.choice(np.arange(3, 7), size=n_notes)
-            midi_pitches = [(p + 12 * o) for p, o in list(zip(pitches, octaves))]
+            midi_pitches = [(p + 12 * o) for p, o in zip(pitches, octaves, strict=True)]
         elif mode == "chord":
             pitches = self.pcs
             octaves = [4] * pitches.shape[0]
-            midi_pitches = [(p + 12 * o) for p, o in list(zip(pitches, octaves))]
+            midi_pitches = [(p + 12 * o) for p, o in zip(pitches, octaves, strict=True)]
 
             starts = [0] * pitches.shape[0]
             ends = [note_duration] * pitches.shape[0]
@@ -377,7 +374,7 @@ class PitchClassSet:
         program = pm.instrument_name_to_program(instrument_name)
         instrument = pm.Instrument(program=program)
 
-        for mp, s, e in zip(midi_pitches, starts, ends):
+        for mp, s, e in zip(midi_pitches, starts, ends, strict=True):
             # Create a Note instance for this note, starting at `s` and ending at `e`.
             note = pm.Note(pitch=mp, velocity=velocity, start=s, end=e)
             # Add it to instrument

@@ -3,7 +3,7 @@ from math import gcd
 import numpy as np
 
 
-def G(c: int, d: int, g: int) -> np.ndarray:
+def generate_scale(c: int, d: int, g: int) -> np.ndarray:
     """
     Generate scale with size d in chromatic universe of cardinality c.
     Generator size is g specific (chromatic) steps.
@@ -18,18 +18,18 @@ def G(c: int, d: int, g: int) -> np.ndarray:
     g : int
         generator size
     """
-    specific_steps = np.array(sorted(list(set([(g * x) % c for x in range(d)]))))
+    specific_steps = np.array(sorted({(g * x) % c for x in range(d)}))
 
-    g = np.zeros(c, dtype=int)
-    g[specific_steps] += 1
+    scale = np.zeros(c, dtype=int)
+    scale[specific_steps] += 1
 
-    return g
+    return scale
 
 
 # test for given scale whether generated
 
 
-def is_G(s: np.ndarray) -> bool:
+def is_generated(s: np.ndarray) -> bool:
     # TODO: does not work for transpositions!
     """
     Tests whether scale is generated.
@@ -49,9 +49,9 @@ def is_G(s: np.ndarray) -> bool:
     d = int(s.sum())
     specific_steps = pcset(s)
 
-    g = invmod(specific_steps, c)
+    generator = invmod(specific_steps, c)
 
-    return np.array_equal(G(c, d, g), s)
+    return np.array_equal(generate_scale(c, d, generator), s)
 
 
 def invmod(arr, c):
@@ -66,7 +66,7 @@ def invmod(arr, c):
         raise Exception("The modular inverse does not exist.")
 
 
-def is_DE(s: np.ndarray) -> bool:
+def is_distributionally_even(s: np.ndarray) -> bool:
     """Each generic interval comes in either one or two specific sizes."""
 
     arr = pcset(s)
@@ -75,7 +75,7 @@ def is_DE(s: np.ndarray) -> bool:
     return 1 <= len(set(diff)) <= 2
 
 
-def J(k: int, c: int, d: int, m: int) -> int:
+def j_function(k: int, c: int, d: int, m: int) -> int:
     """
     J function after Clough & Douthett (1991)
 
@@ -162,4 +162,4 @@ def binary(pcset: np.ndarray, c: int) -> np.ndarray:
 
 
 def find_ngrams(input_list, n):
-    return zip(*[input_list[i:] for i in range(n)])
+    return zip(*[input_list[i:] for i in range(n)], strict=False)

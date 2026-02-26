@@ -1,31 +1,31 @@
 import numpy as np
 
 from ..utils import (
-    G,
-    J,
     binary,
     find_ngrams,
+    generate_scale,
     invert,
     invmod,
-    is_DE,
-    is_G,
+    is_distributionally_even,
+    is_generated,
+    j_function,
     pcset,
     transpose,
 )
 
 
-class TestG:
-    def test_g_basic(self):
-        result = G(12, 7, 2)
+class TestGenerateScale:
+    def test_generate_scale_basic(self):
+        result = generate_scale(12, 7, 2)
         assert isinstance(result, np.ndarray)
         assert result.shape == (12,)
 
-    def test_g_chromatic_12_diatonic_7(self):
-        result = G(12, 7, 5)
+    def test_generate_scale_chromatic_12_diatonic_7(self):
+        result = generate_scale(12, 7, 5)
         assert result.shape == (12,)
 
-    def test_g_octotonic(self):
-        result = G(12, 8, 3)
+    def test_generate_scale_octotonic(self):
+        result = generate_scale(12, 8, 3)
         assert result.shape == (12,)
 
 
@@ -39,37 +39,37 @@ class TestInvmod:
         assert result == 2
 
 
-class TestIsG:
-    def test_is_g_diatonic(self):
-        s = G(12, 7, 2)
-        assert is_G(s)
+class TestIsGenerated:
+    def test_is_generated_diatonic(self):
+        s = generate_scale(12, 7, 2)
+        assert is_generated(s)
 
-    def test_is_g_pentatonic(self):
-        s = G(12, 5, 2)
-        assert is_G(s)
+    def test_is_generated_pentatonic(self):
+        s = generate_scale(12, 5, 2)
+        assert is_generated(s)
 
-    def test_is_g_false(self):
+    def test_is_generated_false(self):
         s = np.array([1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0])
-        assert not is_G(s)
+        assert not is_generated(s)
 
 
-class TestIsDE:
-    def test_is_de_diatonic(self):
-        s = G(12, 7, 2)
-        assert is_DE(s)
+class TestIsDistributionallyEven:
+    def test_is_distributionally_even_diatonic(self):
+        s = generate_scale(12, 7, 2)
+        assert is_distributionally_even(s)
 
-    def test_is_de_major(self):
+    def test_is_distributionally_even_major(self):
         s = binary(pcset=np.array([0, 2, 4, 5, 7, 9, 11]), c=12)
-        assert is_DE(s)
+        assert is_distributionally_even(s)
 
 
-class TestJ:
-    def test_j_basic(self):
-        result = J(0, 12, 7, 0)
+class TestJFunction:
+    def test_j_function_basic(self):
+        result = j_function(0, 12, 7, 0)
         assert isinstance(result, (int, np.integer))
 
-    def test_j_values(self):
-        result = J(3, 12, 7, 2)
+    def test_j_function_values(self):
+        result = j_function(3, 12, 7, 2)
         assert result >= 0
 
 

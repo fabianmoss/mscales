@@ -17,9 +17,9 @@ def tone_cloud(
 
     # binary = "".join([str(x) for x in scale])
 
-    pitches = [x for x in rng.choice(np.nonzero(scale)[0], size=n_notes)]
+    pitches = list(rng.choice(np.nonzero(scale)[0], size=n_notes))
     octaves = rng.choice(np.arange(3, 7), size=n_notes)
-    midi_pitches = [(p + 12 * o) for p, o in list(zip(pitches, octaves))]
+    midi_pitches = [(p + 12 * o) for p, o in zip(pitches, octaves, strict=True)]
 
     # Create a PrettyMIDI object
     midi = pm.PrettyMIDI()
@@ -33,7 +33,7 @@ def tone_cloud(
     program = pm.instrument_name_to_program(instrument_name)
     instrument = pm.Instrument(program=program)
 
-    for mp, s, e in zip(midi_pitches, starts, ends):
+    for mp, s, e in zip(midi_pitches, starts, ends, strict=True):
         # Create a Note instance for this note, starting at `s` and ending at `e`.
         note = pm.Note(pitch=mp, velocity=velocity, start=s, end=e)
         # Add it to instrument
@@ -43,7 +43,6 @@ def tone_cloud(
     midi.instruments.append(instrument)
 
     if save_as is not None:
-        # filename = f'mid_i{instrument_code}_p{binary}_d{int(note_duration * 1000)}.mid'
         midi.write(save_as)
     else:
         return midi
