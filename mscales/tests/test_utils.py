@@ -66,7 +66,7 @@ class TestIsDistributionallyEven:
 class TestJFunction:
     def test_j_function_basic(self):
         result = j_function(0, 12, 7, 0)
-        assert isinstance(result, (int, np.integer))
+        assert isinstance(result, int | np.integer)
 
     def test_j_function_values(self):
         result = j_function(3, 12, 7, 2)

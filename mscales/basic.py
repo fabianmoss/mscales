@@ -98,7 +98,7 @@ class PitchClassSet:
             self.pcs = np.array(
                 [10 if p == "T" else 11 if p == "E" else int(p) for p in list(pcset)]
             )
-        elif isinstance(pcset, (Iterable, PitchClassSet)):
+        elif isinstance(pcset, Iterable | PitchClassSet):
             self.pcs = np.array([int(p) for p in pcset])
         else:
             raise TypeError(f"I don't recognize the pitch-class input {type(pcset)}.")
@@ -243,9 +243,9 @@ class PitchClassSet:
         given chromatic cardinality c and diatonic cardinality d.
         """
 
-        assert i in range(
-            self.d
-        ), f"Generic interval i={i} has to be between 0 and {self.d - 1}."
+        assert i in range(self.d), (
+            f"Generic interval i={i} has to be between 0 and {self.d - 1}."
+        )
 
         return {
             (k - j) % self.c
@@ -366,9 +366,9 @@ class PitchClassSet:
         midi = pm.PrettyMIDI()
 
         # Create an Instrument instance for an instrument
-        assert (
-            instrument_name in pm.constants.INSTRUMENT_MAP
-        ), f"Instrument must be in {pm.constants.INSTRUMENT_MAP}"
+        assert instrument_name in pm.constants.INSTRUMENT_MAP, (
+            f"Instrument must be in {pm.constants.INSTRUMENT_MAP}"
+        )
         # instrument_code = pm.constants.INSTRUMENT_MAP.index(instrument_name)
 
         program = pm.instrument_name_to_program(instrument_name)
