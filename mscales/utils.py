@@ -163,6 +163,3 @@ def binary(pcset: np.ndarray, c: int) -> np.ndarray:
 
 def find_ngrams(input_list, n):
     return zip(*[input_list[i:] for i in range(n)])
-
-
-print(transpose(1, 2))
