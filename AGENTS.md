@@ -142,7 +142,6 @@ mscales/
 ├── __init__.py          # Package exports
 ├── scales.py            # Scales class
 ├── basic.py             # Core classes
-├── concepts.py          # Musical concepts
 ├── plots.py            # Visualization
 ├── sound.py            # Audio/sonification
 ├── utils.py            # Utilities
