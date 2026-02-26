@@ -1,5 +1,5 @@
-import pytest
 from collections import Counter
+
 from ..scales import Scales
 
 

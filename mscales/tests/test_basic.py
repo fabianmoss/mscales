@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from ..basic import PitchClass, PitchClassInterval, PitchClassSet
 
 

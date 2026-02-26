@@ -1,16 +1,16 @@
 import numpy as np
-import pytest
+
 from ..utils import (
     G,
-    is_G,
-    invmod,
-    is_DE,
     J,
-    transpose,
-    invert,
-    pcset,
     binary,
     find_ngrams,
+    invert,
+    invmod,
+    is_DE,
+    is_G,
+    pcset,
+    transpose,
 )
 
 

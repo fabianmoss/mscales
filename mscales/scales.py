@@ -1,6 +1,7 @@
-import numpy as np
-from itertools import product, combinations
 from collections import Counter
+from itertools import combinations, product
+
+import numpy as np
 
 
 class Scales:
@@ -57,7 +58,10 @@ class Scales:
             List of Counters, representing all intervals mod 12.
         """
 
-        return [Counter([(y - x) % 12 for (x, y) in combinations(pc, r=2)]) for pc in self.pitch_classes()]
+        return [
+            Counter([(y - x) % 12 for (x, y) in combinations(pc, r=2)])
+            for pc in self.pitch_classes()
+        ]
 
 
 # TODO: interval CLASS vectors (only from 0 to 6)

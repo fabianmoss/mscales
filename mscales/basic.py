@@ -1,10 +1,12 @@
-import numpy as np
-from itertools import combinations
-from collections.abc import Iterable
-import matplotlib.pyplot as plt
-import pretty_midi as pm
-from .utils import find_ngrams
 from collections import Counter
+from collections.abc import Iterable
+from itertools import combinations
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pretty_midi as pm
+
+from .utils import find_ngrams
 
 rng = np.random.default_rng()
 
@@ -244,9 +246,9 @@ class PitchClassSet:
         given chromatic cardinality c and diatonic cardinality d.
         """
 
-        assert i in range(
-            self.d
-        ), f"Generic interval i={i} has to be between 0 and {self.d-1}."
+        assert i in range(self.d), (
+            f"Generic interval i={i} has to be between 0 and {self.d - 1}."
+        )
 
         return {(k - j) % self.c for j, k in zip(self.pcs, np.roll(self.pcs, -i))}
 
@@ -332,9 +334,7 @@ class PitchClassSet:
             ax.plot(thetas, radii, c="k", zorder=5)
             ax.fill(thetas, radii, alpha=0.75, zorder=4)
         else:
-            print(
-                "I don't recognize the plot kind." "Valid values are 'polar' and 'bar'."
-            )
+            print("I don't recognize the plot kind.Valid values are 'polar' and 'bar'.")
         if save:
             plt.savefig(save)
 
@@ -369,9 +369,9 @@ class PitchClassSet:
         midi = pm.PrettyMIDI()
 
         # Create an Instrument instance for an instrument
-        assert (
-            instrument_name in pm.constants.INSTRUMENT_MAP
-        ), f"Instrument must be in {pm.constants.INSTRUMENT_MAP}"
+        assert instrument_name in pm.constants.INSTRUMENT_MAP, (
+            f"Instrument must be in {pm.constants.INSTRUMENT_MAP}"
+        )
         # instrument_code = pm.constants.INSTRUMENT_MAP.index(instrument_name)
 
         program = pm.instrument_name_to_program(instrument_name)
@@ -432,7 +432,6 @@ class PitchClassSet:
 
 
 if __name__ == "__main__":
-
     # test cases from https://musictheory.pugetsound.edu/mt21c/PrimeForm.html
     s = {3, 11, 2}
     # s = {8, 0, 9}
