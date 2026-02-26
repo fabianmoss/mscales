@@ -7,8 +7,7 @@
 ### Installation
 
 ```bash
-pip install -e .                    # Install package
-pip install -r requirements-dev.txt # Install dev dependencies
+pip install -e ".[dev]"         # Install with dev dependencies
 ```
 
 ### Running Tests
@@ -23,16 +22,16 @@ pytest -v                            # Verbose output
 ### Linting and Formatting
 
 ```bash
-pre-commit run --all-files  # Run all hooks (black, flake8, nbstripout)
-black mscales/               # Format code
-flake8 mscales/              # Lint code
+ruff check mscales/          # Lint code
+ruff format mscales/         # Format code
+pre-commit run --all-files   # Run all hooks
 ```
 
 ### Building
 
 ```bash
-poetry build   # Build package
-poetry install # Install via poetry
+pip install build            # Install build tools
+python -m build              # Build package
 ```
 
 ## Code Style Guidelines
@@ -40,8 +39,7 @@ poetry install # Install via poetry
 ### General
 
 - Python 3.11+
-- **Black** for formatting (line length: 88)
-- **Flake8** for linting (max line length: 115)
+- **Ruff** for linting and formatting (line length: 88)
 
 ### Naming Conventions
 
@@ -153,4 +151,4 @@ mscales/
 
 ### Pre-commit
 
-Uses `.pre-commit-config.yaml` with Black, Flake8, and nbstripout. Run `pre-commit install` to set up git hooks.
+Uses `.pre-commit-config.yaml` with Ruff. Run `pre-commit install` to set up git hooks.
