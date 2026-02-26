@@ -59,7 +59,7 @@ class Scales:
         """
 
         return [
-            Counter([(y - x) % 12 for (x, y) in combinations(pc, r=2)])
+            Counter([(y - x) % self.c for (x, y) in combinations(pc, r=2)])
             for pc in self.pitch_classes()
         ]
 

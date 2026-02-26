@@ -1,8 +1,7 @@
 import numpy as np
 import pretty_midi as pm
-from numpy.random import default_rng
 
-rng = default_rng(123)
+from .basic import rng
 
 
 def tone_cloud(
@@ -26,9 +25,9 @@ def tone_cloud(
     midi = pm.PrettyMIDI()
 
     # Create an Instrument instance for an instrument
-    assert instrument_name in pm.constants.INSTRUMENT_MAP, (
-        f"Instrument must be in {pm.constants.INSTRUMENT_MAP}"
-    )
+    assert (
+        instrument_name in pm.constants.INSTRUMENT_MAP
+    ), f"Instrument must be in {pm.constants.INSTRUMENT_MAP}"
     # instrument_code = pm.constants.INSTRUMENT_MAP.index(instrument_name)
 
     program = pm.instrument_name_to_program(instrument_name)

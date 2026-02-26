@@ -8,7 +8,7 @@ import pretty_midi as pm
 
 from .utils import find_ngrams
 
-rng = np.random.default_rng()
+rng = np.random.default_rng(123)
 
 
 class PitchClass:
@@ -115,6 +115,7 @@ class PitchClassSet:
     def __eq__(self, other) -> bool:
         if isinstance(other, PitchClassSet):
             return np.array_equal(self.pcs, other.pcs)
+        return False
 
     def sort(self):
         return PitchClassSet(np.sort(self.pcs))
@@ -246,9 +247,9 @@ class PitchClassSet:
         given chromatic cardinality c and diatonic cardinality d.
         """
 
-        assert i in range(self.d), (
-            f"Generic interval i={i} has to be between 0 and {self.d - 1}."
-        )
+        assert i in range(
+            self.d
+        ), f"Generic interval i={i} has to be between 0 and {self.d - 1}."
 
         return {(k - j) % self.c for j, k in zip(self.pcs, np.roll(self.pcs, -i))}
 
@@ -347,7 +348,6 @@ class PitchClassSet:
         instrument_name: str = "Acoustic Grand Piano",
         save_as: str = None,
     ):
-
         if mode == "cloud":
             starts = np.arange(n_notes) * note_duration  # onsets
             ends = starts + note_duration  # offsets
@@ -369,9 +369,9 @@ class PitchClassSet:
         midi = pm.PrettyMIDI()
 
         # Create an Instrument instance for an instrument
-        assert instrument_name in pm.constants.INSTRUMENT_MAP, (
-            f"Instrument must be in {pm.constants.INSTRUMENT_MAP}"
-        )
+        assert (
+            instrument_name in pm.constants.INSTRUMENT_MAP
+        ), f"Instrument must be in {pm.constants.INSTRUMENT_MAP}"
         # instrument_code = pm.constants.INSTRUMENT_MAP.index(instrument_name)
 
         program = pm.instrument_name_to_program(instrument_name)
