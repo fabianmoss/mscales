@@ -7,7 +7,9 @@
 ### Installation
 
 ```bash
-pip install -e ".[dev]"         # Install with dev dependencies
+uv pip install -e ".[dev]"       # Install with uv (recommended)
+# or
+pip install -e ".[dev]"            # Install with pip
 ```
 
 ### Running Tests
