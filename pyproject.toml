@@ -1,18 +1,41 @@
-[tool.poetry]
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
 name = "mscales"
 version = "1.4.1"
 description = "A Python package to generate, visualize, and sonify musical scales."
-authors = ["Fabian C. Moss <fabianmoss@gmail.com>"]
-license = "MIT"
 readme = "README.md"
+authors = [{name = "Fabian C. Moss", email = "fabianmoss@gmail.com"}]
+license = {text = "MIT"}
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26.4",
+    "pretty_midi>=0.2.10",
+    "matplotlib>=3.8.4",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-numpy = "^1.26.4"
-pretty_midi = "^0.2.10"
-matplotlib = "^3.8.4"
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+]
 
+[tool.ruff]
+line-length = 88
+target-version = "py311"
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "SIM"]
+ignore = ["E501", "E203", "E402", "N802", "N806", "B905", "B016", "C401", "C403", "C414", "C416", "SIM103", "SIM210", "F841"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"mscales/tests/*" = ["F401", "F841"]
+"mscales/utils.py" = ["N802", "N806"]
+"mscales/sound.py" = ["B905", "C416"]
+"mscales/basic.py" = ["B905", "B016", "N806", "C401", "C403", "C416", "SIM103", "SIM210"]
+
+[tool.pytest.ini_options]
+testpaths = ["mscales/tests"]
